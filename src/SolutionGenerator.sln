@@ -1,0 +1,31 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolutionGenerator", "SolutionGenerator\SolutionGenerator.csproj", "{175BDF78-5F4E-407D-B63C-52F7DB65FFFA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8AED3657-3762-4B95-8434-71B300207011}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolutionGenerator.Frontend", "SolutionGenerator.Frontend\SolutionGenerator.Frontend.csproj", "{FFE51261-FD23-444F-B3C6-CA64B95A2441}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{175BDF78-5F4E-407D-B63C-52F7DB65FFFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{175BDF78-5F4E-407D-B63C-52F7DB65FFFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{175BDF78-5F4E-407D-B63C-52F7DB65FFFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{175BDF78-5F4E-407D-B63C-52F7DB65FFFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFE51261-FD23-444F-B3C6-CA64B95A2441}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFE51261-FD23-444F-B3C6-CA64B95A2441}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFE51261-FD23-444F-B3C6-CA64B95A2441}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFE51261-FD23-444F-B3C6-CA64B95A2441}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{175BDF78-5F4E-407D-B63C-52F7DB65FFFA} = {8AED3657-3762-4B95-8434-71B300207011}
+		{FFE51261-FD23-444F-B3C6-CA64B95A2441} = {8AED3657-3762-4B95-8434-71B300207011}
+	EndGlobalSection
+EndGlobal
