@@ -55,6 +55,7 @@ namespace SolutionGenerator.Frontend
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.chkStartVisualStudio = new System.Windows.Forms.CheckBox();
             projectAssemblyNameLabel = new System.Windows.Forms.Label();
             projectGuidLabel = new System.Windows.Forms.Label();
             projectNameLabel = new System.Windows.Forms.Label();
@@ -152,6 +153,15 @@ namespace SolutionGenerator.Frontend
             targetFrameworkLabel.Text = "Target Framework:";
             this.toolTip1.SetToolTip(targetFrameworkLabel, "The version of .Net framework to build the project in.");
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new System.Drawing.Point(12, 225);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(91, 13);
+            label1.TabIndex = 14;
+            label1.Text = "ReadMe Content:";
+            // 
             // projectAssemblyNameTextBox
             // 
             this.projectAssemblyNameTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.solutionModelBindingSource, "ProjectAssemblyName", true));
@@ -222,9 +232,9 @@ namespace SolutionGenerator.Frontend
             // 
             // btnGenerate
             // 
-            this.btnGenerate.Location = new System.Drawing.Point(152, 419);
+            this.btnGenerate.Location = new System.Drawing.Point(270, 419);
             this.btnGenerate.Name = "btnGenerate";
-            this.btnGenerate.Size = new System.Drawing.Size(381, 23);
+            this.btnGenerate.Size = new System.Drawing.Size(263, 23);
             this.btnGenerate.TabIndex = 7;
             this.btnGenerate.Text = "Generate";
             this.btnGenerate.UseVisualStyleBackColor = true;
@@ -259,20 +269,22 @@ namespace SolutionGenerator.Frontend
             this.richTextBox1.TabIndex = 15;
             this.richTextBox1.Text = "";
             // 
-            // label1
+            // chkStartVisualStudio
             // 
-            label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(12, 225);
-            label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(91, 13);
-            label1.TabIndex = 14;
-            label1.Text = "ReadMe Content:";
+            this.chkStartVisualStudio.AutoSize = true;
+            this.chkStartVisualStudio.Location = new System.Drawing.Point(152, 423);
+            this.chkStartVisualStudio.Name = "chkStartVisualStudio";
+            this.chkStartVisualStudio.Size = new System.Drawing.Size(112, 17);
+            this.chkStartVisualStudio.TabIndex = 16;
+            this.chkStartVisualStudio.Text = "Start Visual Studio";
+            this.chkStartVisualStudio.UseVisualStyleBackColor = true;
             // 
             // GeneratorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(556, 454);
+            this.Controls.Add(this.chkStartVisualStudio);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.btnBrowse);
             this.Controls.Add(this.btnGenerate);
@@ -322,5 +334,6 @@ namespace SolutionGenerator.Frontend
         private System.Windows.Forms.ErrorProvider errorProvider1;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.CheckBox chkStartVisualStudio;
     }
 }
