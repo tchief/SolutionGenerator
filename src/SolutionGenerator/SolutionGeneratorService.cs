@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.IO;
+    using Models;
 
     public class SolutionGeneratorService
     {
@@ -24,6 +25,7 @@
             rootDirectoryInfo = new DirectoryInfo(string.Format("{0}/src/", model.RootPath));
             CreateSolutionFile(rootDirectoryInfo, model);
             CreateProjectFile(rootDirectoryInfo, model);
+            CreateTestProjectFile(rootDirectoryInfo, model);
             CreateProjectAssets(rootDirectoryInfo, model);
         }
 
@@ -51,7 +53,7 @@
 
         private FileInfo CreateProjectFile(DirectoryInfo root, SolutionModel model)
         {
-            string projectRoot = root.FullName + "/" + model.ProjectName + "/";
+            string projectRoot = string.Format("{0}/{1}/", root.FullName, model.ProjectName);
             var directoryInfo = new DirectoryInfo(projectRoot);
 
             if (!directoryInfo.Exists)
@@ -59,25 +61,55 @@
                 directoryInfo.Create();
             }
 
-            var solutionFile = new FileInfo(projectRoot + model.ProjectName + ".csproj");
-            File.WriteAllText(solutionFile.FullName, TemplateRenderer.Render(ProjectTemplate, model));
+            var projectModel = new ProjectModel(model.TestProjectGuid)
+            {
+                ProjectAssemblyName = model.ProjectAssemblyName,
+                ProjectName = model.ProjectName,
+                ProjectRootNameSpace = model.ProjectRootNameSpace,
+                TargetFramework = model.TargetFramework
+            };
+            var projectFile = new FileInfo(projectRoot + projectModel.ProjectName + ".csproj");
+            File.WriteAllText(projectFile.FullName, TemplateRenderer.Render(ProjectTemplate, projectModel));
+            
+            return projectFile;
+        }
 
-            return solutionFile;
+        private FileInfo CreateTestProjectFile(DirectoryInfo root, SolutionModel model)
+        {
+            string projectRoot = string.Format("{0}/{1}.Tests/", root.FullName, model.ProjectName);
+            var directoryInfo = new DirectoryInfo(projectRoot);
+
+            if (!directoryInfo.Exists)
+            {
+                directoryInfo.Create();
+            }
+
+            var projectModel = new ProjectModel(model.TestProjectGuid)
+            {
+                ProjectAssemblyName = string.Format("{0}.Tests", model.ProjectAssemblyName),
+                ProjectName = string.Format("{0}.Tests", model.ProjectName),
+                ProjectRootNameSpace = string.Format("{0}.Tests", model.ProjectRootNameSpace),
+                TargetFramework = model.TargetFramework
+            };
+            var projectFile = new FileInfo(projectRoot + projectModel.ProjectName + ".csproj");
+            File.WriteAllText(projectFile.FullName, TemplateRenderer.Render(ProjectTemplate, projectModel));
+
+            return projectFile;
         }
 
         private FileInfo[] CreateSolutionAssets(DirectoryInfo root, SolutionModel model)
         {
             var files = new List<FileInfo>();
 
-            var solutionFile = new FileInfo(root.FullName + "/.gitattributes");
+            var solutionFile = new FileInfo(string.Format("{0}/.gitattributes", root.FullName));
             File.WriteAllText(solutionFile.FullName, TemplateRenderer.Render(GitAttributeTemplate, model));
             files.Add(solutionFile);
 
-            solutionFile = new FileInfo(root.FullName + "/.gitignore");
+            solutionFile = new FileInfo(string.Format("{0}/.gitignore", root.FullName));
             File.WriteAllText(solutionFile.FullName, TemplateRenderer.Render(GitIgnoreTemplate, model));
             files.Add(solutionFile);
 
-            solutionFile = new FileInfo(root.FullName + "/README.md");
+            solutionFile = new FileInfo(string.Format("{0}/README.md", root.FullName));
             File.WriteAllText(solutionFile.FullName, TemplateRenderer.Render(ReadmeTemplate, model));
             files.Add(solutionFile);
 
@@ -88,11 +120,11 @@
         {
             var files = new List<FileInfo>();
 
-            var solutionFile = new FileInfo(root.FullName + "/resharper.settings");
+            var solutionFile = new FileInfo(string.Format("{0}/resharper.settings", root.FullName));
             File.WriteAllText(solutionFile.FullName, TemplateRenderer.Render(ResharperSettingsTemplate, model));
             files.Add(solutionFile);
 
-            solutionFile = new FileInfo(root.FullName + "/Settings.StyleCop");
+            solutionFile = new FileInfo(string.Format("{0}/Settings.StyleCop", root.FullName));
             File.WriteAllText(solutionFile.FullName, TemplateRenderer.Render(StyleCopTemplate, model));
             files.Add(solutionFile);
 

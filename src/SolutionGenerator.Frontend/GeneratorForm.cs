@@ -1,4 +1,6 @@
-﻿namespace SolutionGenerator.Frontend
+﻿using SolutionGenerator.Models;
+
+namespace SolutionGenerator.Frontend
 {
     using System;
     using System.Linq;

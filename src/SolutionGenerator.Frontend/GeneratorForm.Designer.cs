@@ -1,4 +1,6 @@
-﻿namespace SolutionGenerator.Frontend
+﻿using SolutionGenerator.Models;
+
+namespace SolutionGenerator.Frontend
 {
     partial class GeneratorForm
     {
@@ -157,7 +159,7 @@
             // 
             // solutionModelBindingSource
             // 
-            this.solutionModelBindingSource.DataSource = typeof(SolutionGenerator.SolutionModel);
+            this.solutionModelBindingSource.DataSource = typeof(SolutionModel);
             // 
             // projectGuidTextBox
             // 

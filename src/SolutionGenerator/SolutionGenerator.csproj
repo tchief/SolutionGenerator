@@ -41,8 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Base\ModelBase.cs" />
+    <Compile Include="Models\ProjectModel.cs" />
     <Compile Include="SolutionGeneratorService.cs" />
-    <Compile Include="SolutionModel.cs" />
+    <Compile Include="Models\SolutionModel.cs" />
     <Compile Include="TemplateRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
