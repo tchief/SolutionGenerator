@@ -14,6 +14,7 @@
         private string _solutionName;
         private string _projectName;
         private string _testProjectGuid;
+        private string _solutionReadme;
 
         public SolutionModel()
         {
@@ -21,8 +22,26 @@
             SolutionGuid = Guid.NewGuid().ToString("B");
             TestProjectGuid = Guid.NewGuid().ToString("B");
             TargetFramework = "v4.5";
+            SolutionReadme = "# the real project name.\r\n\r\n----------------------------------------------";
         }
-        
+
+        public string SolutionReadme
+        {
+            get
+            {
+                return _solutionReadme;
+            }
+            set
+            {
+                if (value == _solutionReadme)
+                {
+                    return;
+                }
+                _solutionReadme = value;
+                OnPropertyChanged();
+            }
+        }
+
         public string TestProjectGuid
         {
             get

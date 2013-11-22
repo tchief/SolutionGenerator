@@ -66,7 +66,9 @@
                 ProjectAssemblyName = model.ProjectAssemblyName,
                 ProjectName = model.ProjectName,
                 ProjectRootNameSpace = model.ProjectRootNameSpace,
-                TargetFramework = model.TargetFramework
+                TargetFramework = model.TargetFramework,
+                ReleaseOutputPath = string.Format("../../output/Release/{0}", model.ProjectName),
+                DebugOutputPath = string.Format("../../output/Debug/{0}", model.ProjectName)
             };
             var projectFile = new FileInfo(projectRoot + projectModel.ProjectName + ".csproj");
             File.WriteAllText(projectFile.FullName, TemplateRenderer.Render(ProjectTemplate, projectModel));
@@ -84,12 +86,15 @@
                 directoryInfo.Create();
             }
 
+            var projectName = string.Format("{0}.Tests", model.ProjectName);
             var projectModel = new ProjectModel(model.TestProjectGuid)
             {
                 ProjectAssemblyName = string.Format("{0}.Tests", model.ProjectAssemblyName),
-                ProjectName = string.Format("{0}.Tests", model.ProjectName),
+                ProjectName = projectName,
                 ProjectRootNameSpace = string.Format("{0}.Tests", model.ProjectRootNameSpace),
-                TargetFramework = model.TargetFramework
+                TargetFramework = model.TargetFramework,
+                ReleaseOutputPath = string.Format("../../output/Release/{0}", projectName),
+                DebugOutputPath = string.Format("../../output/Debug/{0}", projectName)
             };
             var projectFile = new FileInfo(projectRoot + projectModel.ProjectName + ".csproj");
             File.WriteAllText(projectFile.FullName, TemplateRenderer.Render(ProjectTemplate, projectModel));

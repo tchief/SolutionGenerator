@@ -39,6 +39,7 @@ namespace SolutionGenerator.Frontend
             System.Windows.Forms.Label solutionGuidLabel;
             System.Windows.Forms.Label solutionNameLabel;
             System.Windows.Forms.Label targetFrameworkLabel;
+            System.Windows.Forms.Label label1;
             this.projectAssemblyNameTextBox = new System.Windows.Forms.TextBox();
             this.solutionModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.projectGuidTextBox = new System.Windows.Forms.TextBox();
@@ -53,6 +54,7 @@ namespace SolutionGenerator.Frontend
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             projectAssemblyNameLabel = new System.Windows.Forms.Label();
             projectGuidLabel = new System.Windows.Forms.Label();
             projectNameLabel = new System.Windows.Forms.Label();
@@ -61,6 +63,7 @@ namespace SolutionGenerator.Frontend
             solutionGuidLabel = new System.Windows.Forms.Label();
             solutionNameLabel = new System.Windows.Forms.Label();
             targetFrameworkLabel = new System.Windows.Forms.Label();
+            label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.solutionModelBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
@@ -159,7 +162,7 @@ namespace SolutionGenerator.Frontend
             // 
             // solutionModelBindingSource
             // 
-            this.solutionModelBindingSource.DataSource = typeof(SolutionModel);
+            this.solutionModelBindingSource.DataSource = typeof(SolutionGenerator.Models.SolutionModel);
             // 
             // projectGuidTextBox
             // 
@@ -219,7 +222,7 @@ namespace SolutionGenerator.Frontend
             // 
             // btnGenerate
             // 
-            this.btnGenerate.Location = new System.Drawing.Point(152, 222);
+            this.btnGenerate.Location = new System.Drawing.Point(152, 419);
             this.btnGenerate.Name = "btnGenerate";
             this.btnGenerate.Size = new System.Drawing.Size(381, 23);
             this.btnGenerate.TabIndex = 7;
@@ -247,11 +250,30 @@ namespace SolutionGenerator.Frontend
             this.errorProvider1.ContainerControl = this;
             this.errorProvider1.DataSource = this.solutionModelBindingSource;
             // 
+            // richTextBox1
+            // 
+            this.richTextBox1.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.solutionModelBindingSource, "SolutionReadme", true));
+            this.richTextBox1.Location = new System.Drawing.Point(152, 222);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(381, 191);
+            this.richTextBox1.TabIndex = 15;
+            this.richTextBox1.Text = "";
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new System.Drawing.Point(12, 225);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(91, 13);
+            label1.TabIndex = 14;
+            label1.Text = "ReadMe Content:";
+            // 
             // GeneratorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(556, 259);
+            this.ClientSize = new System.Drawing.Size(556, 454);
+            this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.btnBrowse);
             this.Controls.Add(this.btnGenerate);
             this.Controls.Add(projectAssemblyNameLabel);
@@ -268,6 +290,7 @@ namespace SolutionGenerator.Frontend
             this.Controls.Add(this.solutionGuidTextBox);
             this.Controls.Add(solutionNameLabel);
             this.Controls.Add(this.solutionNameTextBox);
+            this.Controls.Add(label1);
             this.Controls.Add(targetFrameworkLabel);
             this.Controls.Add(this.targetFrameworkTextBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -298,5 +321,6 @@ namespace SolutionGenerator.Frontend
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
         private System.Windows.Forms.ErrorProvider errorProvider1;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.RichTextBox richTextBox1;
     }
 }
