@@ -25,6 +25,10 @@ Things SolutionGenerator will do for you **at the click of a button**:
 
 Once you click the button to create the solution, it will do all of the above, and  immediately start Visual Studio, so you can start working on your project in no time ;)
 
+## Customising
+
+- You can change the content of the various template files in the "\template" folder.
+- You can also customize the folder structure.
 
 ## Roadmap
 
@@ -34,4 +38,4 @@ Once you click the button to create the solution, it will do all of the above, a
 
 This project is open source and released under the MIT license.
 
-Please contribute to make it better.
+Please contribute to make it better ;)
