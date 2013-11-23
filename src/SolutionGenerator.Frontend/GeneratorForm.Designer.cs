@@ -40,8 +40,14 @@ namespace SolutionGenerator.Frontend
             System.Windows.Forms.Label solutionNameLabel;
             System.Windows.Forms.Label targetFrameworkLabel;
             System.Windows.Forms.Label label1;
+            System.Windows.Forms.Label includeGitAttributeLabel;
+            System.Windows.Forms.Label includeGitIgnoreLabel;
+            System.Windows.Forms.Label includeLicenseLabel;
+            System.Windows.Forms.Label includeReadmeLabel;
+            System.Windows.Forms.Label includeResharperLabel;
+            System.Windows.Forms.Label includeStylecopLabel;
+            System.Windows.Forms.Label includeTestProjectLabel;
             this.projectAssemblyNameTextBox = new System.Windows.Forms.TextBox();
-            this.solutionModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.projectGuidTextBox = new System.Windows.Forms.TextBox();
             this.projectNameTextBox = new System.Windows.Forms.TextBox();
             this.projectRootNameSpaceTextBox = new System.Windows.Forms.TextBox();
@@ -54,7 +60,16 @@ namespace SolutionGenerator.Frontend
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.readmeRichTextBox = new System.Windows.Forms.RichTextBox();
+            this.chkStartVisualStudio = new System.Windows.Forms.CheckBox();
+            this.includeGitAttributeCheckBox = new System.Windows.Forms.CheckBox();
+            this.includeGitIgnoreCheckBox = new System.Windows.Forms.CheckBox();
+            this.includeLicenseCheckBox = new System.Windows.Forms.CheckBox();
+            this.includeReadmeCheckBox = new System.Windows.Forms.CheckBox();
+            this.includeResharperCheckBox = new System.Windows.Forms.CheckBox();
+            this.includeStylecopCheckBox = new System.Windows.Forms.CheckBox();
+            this.includeTestProjectCheckBox = new System.Windows.Forms.CheckBox();
+            this.solutionModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             projectAssemblyNameLabel = new System.Windows.Forms.Label();
             projectGuidLabel = new System.Windows.Forms.Label();
             projectNameLabel = new System.Windows.Forms.Label();
@@ -64,8 +79,15 @@ namespace SolutionGenerator.Frontend
             solutionNameLabel = new System.Windows.Forms.Label();
             targetFrameworkLabel = new System.Windows.Forms.Label();
             label1 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.solutionModelBindingSource)).BeginInit();
+            includeGitAttributeLabel = new System.Windows.Forms.Label();
+            includeGitIgnoreLabel = new System.Windows.Forms.Label();
+            includeLicenseLabel = new System.Windows.Forms.Label();
+            includeReadmeLabel = new System.Windows.Forms.Label();
+            includeResharperLabel = new System.Windows.Forms.Label();
+            includeStylecopLabel = new System.Windows.Forms.Label();
+            includeTestProjectLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.solutionModelBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // projectAssemblyNameLabel
@@ -152,6 +174,15 @@ namespace SolutionGenerator.Frontend
             targetFrameworkLabel.Text = "Target Framework:";
             this.toolTip1.SetToolTip(targetFrameworkLabel, "The version of .Net framework to build the project in.");
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new System.Drawing.Point(12, 225);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(91, 13);
+            label1.TabIndex = 14;
+            label1.Text = "ReadMe Content:";
+            // 
             // projectAssemblyNameTextBox
             // 
             this.projectAssemblyNameTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.solutionModelBindingSource, "ProjectAssemblyName", true));
@@ -160,17 +191,13 @@ namespace SolutionGenerator.Frontend
             this.projectAssemblyNameTextBox.Size = new System.Drawing.Size(381, 20);
             this.projectAssemblyNameTextBox.TabIndex = 5;
             // 
-            // solutionModelBindingSource
-            // 
-            this.solutionModelBindingSource.DataSource = typeof(SolutionGenerator.Models.SolutionModel);
-            // 
             // projectGuidTextBox
             // 
             this.projectGuidTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.solutionModelBindingSource, "ProjectGuid", true));
             this.projectGuidTextBox.Location = new System.Drawing.Point(152, 169);
             this.projectGuidTextBox.Name = "projectGuidTextBox";
             this.projectGuidTextBox.Size = new System.Drawing.Size(381, 20);
-            this.projectGuidTextBox.TabIndex = 3;
+            this.projectGuidTextBox.TabIndex = 17;
             // 
             // projectNameTextBox
             // 
@@ -222,10 +249,10 @@ namespace SolutionGenerator.Frontend
             // 
             // btnGenerate
             // 
-            this.btnGenerate.Location = new System.Drawing.Point(152, 419);
+            this.btnGenerate.Location = new System.Drawing.Point(270, 419);
             this.btnGenerate.Name = "btnGenerate";
-            this.btnGenerate.Size = new System.Drawing.Size(381, 23);
-            this.btnGenerate.TabIndex = 7;
+            this.btnGenerate.Size = new System.Drawing.Size(263, 23);
+            this.btnGenerate.TabIndex = 9;
             this.btnGenerate.Text = "Generate";
             this.btnGenerate.UseVisualStyleBackColor = true;
             this.btnGenerate.Click += new System.EventHandler(this.BtnGenerateClick);
@@ -250,30 +277,176 @@ namespace SolutionGenerator.Frontend
             this.errorProvider1.ContainerControl = this;
             this.errorProvider1.DataSource = this.solutionModelBindingSource;
             // 
-            // richTextBox1
+            // readmeRichTextBox
             // 
-            this.richTextBox1.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.solutionModelBindingSource, "SolutionReadme", true));
-            this.richTextBox1.Location = new System.Drawing.Point(152, 222);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(381, 191);
-            this.richTextBox1.TabIndex = 15;
-            this.richTextBox1.Text = "";
+            this.readmeRichTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.solutionModelBindingSource, "SolutionReadme", true));
+            this.readmeRichTextBox.Location = new System.Drawing.Point(152, 222);
+            this.readmeRichTextBox.Name = "readmeRichTextBox";
+            this.readmeRichTextBox.Size = new System.Drawing.Size(381, 191);
+            this.readmeRichTextBox.TabIndex = 7;
+            this.readmeRichTextBox.Text = "";
             // 
-            // label1
+            // chkStartVisualStudio
             // 
-            label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(12, 225);
-            label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(91, 13);
-            label1.TabIndex = 14;
-            label1.Text = "ReadMe Content:";
+            this.chkStartVisualStudio.AutoSize = true;
+            this.chkStartVisualStudio.Location = new System.Drawing.Point(152, 423);
+            this.chkStartVisualStudio.Name = "chkStartVisualStudio";
+            this.chkStartVisualStudio.Size = new System.Drawing.Size(112, 17);
+            this.chkStartVisualStudio.TabIndex = 8;
+            this.chkStartVisualStudio.Text = "Start Visual Studio";
+            this.chkStartVisualStudio.UseVisualStyleBackColor = true;
+            // 
+            // includeGitAttributeLabel
+            // 
+            includeGitAttributeLabel.AutoSize = true;
+            includeGitAttributeLabel.Location = new System.Drawing.Point(577, 15);
+            includeGitAttributeLabel.Name = "includeGitAttributeLabel";
+            includeGitAttributeLabel.Size = new System.Drawing.Size(103, 13);
+            includeGitAttributeLabel.TabIndex = 21;
+            includeGitAttributeLabel.Text = "Include Git Attribute:";
+            // 
+            // includeGitAttributeCheckBox
+            // 
+            this.includeGitAttributeCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("CheckState", this.solutionModelBindingSource, "IncludeGitAttribute", true));
+            this.includeGitAttributeCheckBox.Location = new System.Drawing.Point(688, 10);
+            this.includeGitAttributeCheckBox.Name = "includeGitAttributeCheckBox";
+            this.includeGitAttributeCheckBox.Size = new System.Drawing.Size(104, 24);
+            this.includeGitAttributeCheckBox.TabIndex = 22;
+            this.includeGitAttributeCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // includeGitIgnoreLabel
+            // 
+            includeGitIgnoreLabel.AutoSize = true;
+            includeGitIgnoreLabel.Location = new System.Drawing.Point(577, 45);
+            includeGitIgnoreLabel.Name = "includeGitIgnoreLabel";
+            includeGitIgnoreLabel.Size = new System.Drawing.Size(94, 13);
+            includeGitIgnoreLabel.TabIndex = 23;
+            includeGitIgnoreLabel.Text = "Include Git Ignore:";
+            // 
+            // includeGitIgnoreCheckBox
+            // 
+            this.includeGitIgnoreCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("CheckState", this.solutionModelBindingSource, "IncludeGitIgnore", true));
+            this.includeGitIgnoreCheckBox.Location = new System.Drawing.Point(688, 40);
+            this.includeGitIgnoreCheckBox.Name = "includeGitIgnoreCheckBox";
+            this.includeGitIgnoreCheckBox.Size = new System.Drawing.Size(104, 24);
+            this.includeGitIgnoreCheckBox.TabIndex = 24;
+            this.includeGitIgnoreCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // includeLicenseLabel
+            // 
+            includeLicenseLabel.AutoSize = true;
+            includeLicenseLabel.Location = new System.Drawing.Point(577, 75);
+            includeLicenseLabel.Name = "includeLicenseLabel";
+            includeLicenseLabel.Size = new System.Drawing.Size(85, 13);
+            includeLicenseLabel.TabIndex = 25;
+            includeLicenseLabel.Text = "Include License:";
+            // 
+            // includeLicenseCheckBox
+            // 
+            this.includeLicenseCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("CheckState", this.solutionModelBindingSource, "IncludeLicense", true));
+            this.includeLicenseCheckBox.Location = new System.Drawing.Point(688, 70);
+            this.includeLicenseCheckBox.Name = "includeLicenseCheckBox";
+            this.includeLicenseCheckBox.Size = new System.Drawing.Size(104, 24);
+            this.includeLicenseCheckBox.TabIndex = 26;
+            this.includeLicenseCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // includeReadmeLabel
+            // 
+            includeReadmeLabel.AutoSize = true;
+            includeReadmeLabel.Location = new System.Drawing.Point(577, 105);
+            includeReadmeLabel.Name = "includeReadmeLabel";
+            includeReadmeLabel.Size = new System.Drawing.Size(88, 13);
+            includeReadmeLabel.TabIndex = 27;
+            includeReadmeLabel.Text = "Include Readme:";
+            // 
+            // includeReadmeCheckBox
+            // 
+            this.includeReadmeCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("CheckState", this.solutionModelBindingSource, "IncludeReadme", true));
+            this.includeReadmeCheckBox.Location = new System.Drawing.Point(688, 100);
+            this.includeReadmeCheckBox.Name = "includeReadmeCheckBox";
+            this.includeReadmeCheckBox.Size = new System.Drawing.Size(104, 24);
+            this.includeReadmeCheckBox.TabIndex = 28;
+            this.includeReadmeCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // includeResharperLabel
+            // 
+            includeResharperLabel.AutoSize = true;
+            includeResharperLabel.Location = new System.Drawing.Point(577, 135);
+            includeResharperLabel.Name = "includeResharperLabel";
+            includeResharperLabel.Size = new System.Drawing.Size(97, 13);
+            includeResharperLabel.TabIndex = 29;
+            includeResharperLabel.Text = "Include Resharper:";
+            // 
+            // includeResharperCheckBox
+            // 
+            this.includeResharperCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("CheckState", this.solutionModelBindingSource, "IncludeResharper", true));
+            this.includeResharperCheckBox.Location = new System.Drawing.Point(688, 130);
+            this.includeResharperCheckBox.Name = "includeResharperCheckBox";
+            this.includeResharperCheckBox.Size = new System.Drawing.Size(104, 24);
+            this.includeResharperCheckBox.TabIndex = 30;
+            this.includeResharperCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // includeStylecopLabel
+            // 
+            includeStylecopLabel.AutoSize = true;
+            includeStylecopLabel.Location = new System.Drawing.Point(577, 165);
+            includeStylecopLabel.Name = "includeStylecopLabel";
+            includeStylecopLabel.Size = new System.Drawing.Size(89, 13);
+            includeStylecopLabel.TabIndex = 31;
+            includeStylecopLabel.Text = "Include Stylecop:";
+            // 
+            // includeStylecopCheckBox
+            // 
+            this.includeStylecopCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("CheckState", this.solutionModelBindingSource, "IncludeStylecop", true));
+            this.includeStylecopCheckBox.Location = new System.Drawing.Point(688, 160);
+            this.includeStylecopCheckBox.Name = "includeStylecopCheckBox";
+            this.includeStylecopCheckBox.Size = new System.Drawing.Size(104, 24);
+            this.includeStylecopCheckBox.TabIndex = 32;
+            this.includeStylecopCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // includeTestProjectLabel
+            // 
+            includeTestProjectLabel.AutoSize = true;
+            includeTestProjectLabel.Location = new System.Drawing.Point(577, 195);
+            includeTestProjectLabel.Name = "includeTestProjectLabel";
+            includeTestProjectLabel.Size = new System.Drawing.Size(105, 13);
+            includeTestProjectLabel.TabIndex = 33;
+            includeTestProjectLabel.Text = "Include Test Project:";
+            // 
+            // includeTestProjectCheckBox
+            // 
+            this.includeTestProjectCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("CheckState", this.solutionModelBindingSource, "IncludeTestProject", true));
+            this.includeTestProjectCheckBox.Location = new System.Drawing.Point(688, 190);
+            this.includeTestProjectCheckBox.Name = "includeTestProjectCheckBox";
+            this.includeTestProjectCheckBox.Size = new System.Drawing.Size(104, 24);
+            this.includeTestProjectCheckBox.TabIndex = 34;
+            this.includeTestProjectCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // solutionModelBindingSource
+            // 
+            this.solutionModelBindingSource.DataSource = typeof(SolutionGenerator.Models.SolutionModel);
             // 
             // GeneratorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(556, 454);
-            this.Controls.Add(this.richTextBox1);
+            this.ClientSize = new System.Drawing.Size(715, 462);
+            this.Controls.Add(includeGitAttributeLabel);
+            this.Controls.Add(this.includeGitAttributeCheckBox);
+            this.Controls.Add(includeGitIgnoreLabel);
+            this.Controls.Add(this.includeGitIgnoreCheckBox);
+            this.Controls.Add(includeLicenseLabel);
+            this.Controls.Add(this.includeLicenseCheckBox);
+            this.Controls.Add(includeReadmeLabel);
+            this.Controls.Add(this.includeReadmeCheckBox);
+            this.Controls.Add(includeResharperLabel);
+            this.Controls.Add(this.includeResharperCheckBox);
+            this.Controls.Add(includeStylecopLabel);
+            this.Controls.Add(this.includeStylecopCheckBox);
+            this.Controls.Add(includeTestProjectLabel);
+            this.Controls.Add(this.includeTestProjectCheckBox);
+            this.Controls.Add(this.chkStartVisualStudio);
+            this.Controls.Add(this.readmeRichTextBox);
             this.Controls.Add(this.btnBrowse);
             this.Controls.Add(this.btnGenerate);
             this.Controls.Add(projectAssemblyNameLabel);
@@ -298,8 +471,8 @@ namespace SolutionGenerator.Frontend
             this.MinimizeBox = false;
             this.Name = "GeneratorForm";
             this.Text = "Solution Generator";
-            ((System.ComponentModel.ISupportInitialize)(this.solutionModelBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.solutionModelBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -321,6 +494,14 @@ namespace SolutionGenerator.Frontend
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
         private System.Windows.Forms.ErrorProvider errorProvider1;
         private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.RichTextBox readmeRichTextBox;
+        private System.Windows.Forms.CheckBox chkStartVisualStudio;
+        private System.Windows.Forms.CheckBox includeGitAttributeCheckBox;
+        private System.Windows.Forms.CheckBox includeGitIgnoreCheckBox;
+        private System.Windows.Forms.CheckBox includeLicenseCheckBox;
+        private System.Windows.Forms.CheckBox includeReadmeCheckBox;
+        private System.Windows.Forms.CheckBox includeResharperCheckBox;
+        private System.Windows.Forms.CheckBox includeStylecopCheckBox;
+        private System.Windows.Forms.CheckBox includeTestProjectCheckBox;
     }
 }

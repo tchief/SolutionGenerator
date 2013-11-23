@@ -1,4 +1,5 @@
-﻿using SolutionGenerator.Models;
+﻿using System.Diagnostics;
+using SolutionGenerator.Models;
 
 namespace SolutionGenerator.Frontend
 {
@@ -42,13 +43,12 @@ namespace SolutionGenerator.Frontend
 
             solutionModelBindingSource.DataSource = _solutionModel;
 
-            btnGenerate.Enabled =
-                this.Controls.OfType<Control>().Select(x => errorProvider1.GetError(x)).All(x => string.IsNullOrWhiteSpace(x));
+            btnGenerate.Enabled = Controls.OfType<Control>().Select(x => errorProvider1.GetError(x)).All(string.IsNullOrWhiteSpace);
 
             _solutionModel.PropertyChanged += (sender, args) =>
                 {
-                    btnGenerate.Enabled =
-                        this.Controls.OfType<Control>().Select(x => errorProvider1.GetError(x)).All(x => string.IsNullOrWhiteSpace(x));
+                    btnGenerate.Enabled = Controls.OfType<Control>().Select(x => errorProvider1.GetError(x)).All(string.IsNullOrWhiteSpace);
+                    readmeRichTextBox.Enabled = _solutionModel.IncludeReadme;
                 };
         }
 
@@ -56,6 +56,12 @@ namespace SolutionGenerator.Frontend
         {
             var solutionGeneratorService = new SolutionGeneratorService();
             solutionGeneratorService.DoWork(_solutionModel);
+
+            if (chkStartVisualStudio.Checked)
+            {
+                var fileName = string.Format("{0}/src/{1}.sln", _solutionModel.RootPath, _solutionModel.SolutionName);
+                Process.Start(fileName);
+            }
         }
 
         private void BtnBrowseClick(object sender, EventArgs e)

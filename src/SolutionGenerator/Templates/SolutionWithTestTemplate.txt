@@ -2,6 +2,8 @@
 # Visual Studio 2012
 Project("{ProjectGuid}") = "{ProjectName}", "{ProjectName}\{ProjectName}.csproj", "{SolutionGuid}"
 EndProject
+Project("{TestProjectGuid}") = "{ProjectName}.Tests", "{ProjectName}.Tests\{ProjectName}.Tests.csproj", "{SolutionGuid}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

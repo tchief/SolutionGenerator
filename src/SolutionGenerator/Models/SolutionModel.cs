@@ -15,6 +15,7 @@
         private string _projectName;
         private string _testProjectGuid;
         private string _solutionReadme;
+        private bool _includeReadme;
 
         public SolutionModel()
         {
@@ -22,7 +23,36 @@
             SolutionGuid = Guid.NewGuid().ToString("B");
             TestProjectGuid = Guid.NewGuid().ToString("B");
             TargetFramework = "v4.5";
-            SolutionReadme = "# the real project name.\r\n\r\n----------------------------------------------";
+            SolutionReadme = "# {ProjectName}.\r\n\r\n----------------------------------------------";
+
+            IncludeTestProject    = true;
+            IncludeGitIgnore      = true;
+            IncludeGitAttribute   = true;
+            IncludeResharper      = true;
+            IncludeStylecop       = true;
+            IncludeLicense        = true;
+            IncludeReadme = true;
+
+        }
+
+        public bool IncludeTestProject { get; set; }
+        public bool IncludeGitIgnore { get; set; }
+        public bool IncludeGitAttribute { get; set; }
+        public bool IncludeResharper { get; set; }
+        public bool IncludeStylecop { get; set; }
+        public bool IncludeLicense { get; set; }
+        public bool IncludeReadme
+        {
+            get { return _includeReadme; }
+            set
+            {
+                if (value == _includeReadme)
+                {
+                    return;
+                }
+                _includeReadme = value;
+                OnPropertyChanged();
+            }
         }
 
         public string SolutionReadme
