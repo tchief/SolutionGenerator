@@ -7,12 +7,15 @@
     public class SolutionGeneratorService
     {
         private const string SolutionTemplate = "./Templates/SolutionTemplate.txt";
+        private const string SolutionWithTestTemplate = "./Templates/SolutionWithTestTemplate.txt";
         private const string ProjectTemplate = "./Templates/ProjectTemplate.txt";
         private const string GitAttributeTemplate = "./Templates/gitAttributeTemplate.txt";
         private const string GitIgnoreTemplate = "./Templates/gitIgnoreTemplate.txt";
         private const string ReadmeTemplate = "./Templates/ReadmeTemplate.txt";
         private const string ResharperSettingsTemplate = "./Templates/resharperSettingsTemplate.txt";
         private const string StyleCopTemplate = "./Templates/styleCopTemplate.txt";
+        private const string LicenseTemplate = "./Templates/licenseTemplate.txt";
+        private const string FolderStructureFile = "./folders.txt";
 
         public void DoWork(SolutionModel model)
         {
@@ -25,7 +28,10 @@
             rootDirectoryInfo = new DirectoryInfo(string.Format("{0}/src/", model.RootPath));
             CreateSolutionFile(rootDirectoryInfo, model);
             CreateProjectFile(rootDirectoryInfo, model);
-            CreateTestProjectFile(rootDirectoryInfo, model);
+            if (model.IncludeTestProject)
+            {
+                CreateTestProjectFile(rootDirectoryInfo, model);
+            }
             CreateProjectAssets(rootDirectoryInfo, model);
         }
 
@@ -36,17 +42,16 @@
                 root.Create();
             }
 
-            root.CreateSubdirectory("src");
-            root.CreateSubdirectory("lib");
-            root.CreateSubdirectory("docs");
-            root.CreateSubdirectory("output");
-            root.CreateSubdirectory("tools");
+            var directoryCreator = new DirectoryCreator(new FileInfo(FolderStructureFile), root);
+            directoryCreator.CreateDirectoryStructure();
         }
 
         private FileInfo CreateSolutionFile(DirectoryInfo root, SolutionModel model)
         {
+            var templateToRender = model.IncludeTestProject ? SolutionWithTestTemplate : SolutionTemplate;
             var solutionFile = new FileInfo(string.Format("{0}{1}.sln", root.FullName, model.SolutionName));
-            File.WriteAllText(solutionFile.FullName, TemplateRenderer.Render(SolutionTemplate, model));
+            
+            File.WriteAllText(solutionFile.FullName, TemplateRenderer.Render(templateToRender, model));
 
             return solutionFile;
         }
@@ -106,18 +111,32 @@
         {
             var files = new List<FileInfo>();
 
-            var solutionFile = new FileInfo(string.Format("{0}/.gitattributes", root.FullName));
-            File.WriteAllText(solutionFile.FullName, TemplateRenderer.Render(GitAttributeTemplate, model));
-            files.Add(solutionFile);
+            FileInfo solutionFile;
 
-            solutionFile = new FileInfo(string.Format("{0}/.gitignore", root.FullName));
-            File.WriteAllText(solutionFile.FullName, TemplateRenderer.Render(GitIgnoreTemplate, model));
-            files.Add(solutionFile);
-
-            solutionFile = new FileInfo(string.Format("{0}/README.md", root.FullName));
-            File.WriteAllText(solutionFile.FullName, TemplateRenderer.Render(ReadmeTemplate, model));
-            files.Add(solutionFile);
-
+            if (model.IncludeGitAttribute)
+            {
+                solutionFile = new FileInfo(string.Format("{0}/.gitattributes", root.FullName));
+                File.WriteAllText(solutionFile.FullName, TemplateRenderer.Render(GitAttributeTemplate, model));
+                files.Add(solutionFile);
+            }
+            if (model.IncludeGitIgnore)
+            {
+                solutionFile = new FileInfo(string.Format("{0}/.gitignore", root.FullName));
+                File.WriteAllText(solutionFile.FullName, TemplateRenderer.Render(GitIgnoreTemplate, model));
+                files.Add(solutionFile);
+            }
+            if (model.IncludeReadme)
+            {
+                solutionFile = new FileInfo(string.Format("{0}/README.md", root.FullName));
+                File.WriteAllText(solutionFile.FullName, TemplateRenderer.Render(ReadmeTemplate, model));
+                files.Add(solutionFile);
+            }
+            if (model.IncludeLicense)
+            {
+                solutionFile = new FileInfo(string.Format("{0}/License.txt", root.FullName));
+                File.WriteAllText(solutionFile.FullName, TemplateRenderer.Render(LicenseTemplate, model));
+                files.Add(solutionFile);
+            }
             return files.ToArray();
         }
 
@@ -125,14 +144,20 @@
         {
             var files = new List<FileInfo>();
 
-            var solutionFile = new FileInfo(string.Format("{0}/resharper.settings", root.FullName));
-            File.WriteAllText(solutionFile.FullName, TemplateRenderer.Render(ResharperSettingsTemplate, model));
-            files.Add(solutionFile);
+            FileInfo solutionFile;
+            if (model.IncludeResharper)
+            {
 
-            solutionFile = new FileInfo(string.Format("{0}/Settings.StyleCop", root.FullName));
-            File.WriteAllText(solutionFile.FullName, TemplateRenderer.Render(StyleCopTemplate, model));
-            files.Add(solutionFile);
-
+                solutionFile = new FileInfo(string.Format("{0}/resharper.settings", root.FullName));
+                File.WriteAllText(solutionFile.FullName, TemplateRenderer.Render(ResharperSettingsTemplate, model));
+                files.Add(solutionFile);
+            }
+            if (model.IncludeStylecop)
+            {
+                solutionFile = new FileInfo(string.Format("{0}/Settings.StyleCop", root.FullName));
+                File.WriteAllText(solutionFile.FullName, TemplateRenderer.Render(StyleCopTemplate, model));
+                files.Add(solutionFile);
+            }
             return files.ToArray();
         }
     }

@@ -48,6 +48,7 @@ namespace SolutionGenerator.Frontend
             _solutionModel.PropertyChanged += (sender, args) =>
                 {
                     btnGenerate.Enabled = Controls.OfType<Control>().Select(x => errorProvider1.GetError(x)).All(string.IsNullOrWhiteSpace);
+                    readmeRichTextBox.Enabled = _solutionModel.IncludeReadme;
                 };
         }
 
