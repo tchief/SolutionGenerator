@@ -97,8 +97,7 @@ namespace SolutionGenerator.Frontend
             projectNameLabel.Size = new System.Drawing.Size(74, 13);
             projectNameLabel.TabIndex = 4;
             projectNameLabel.Text = "Project Name:";
-            this.toolTip1.SetToolTip(projectNameLabel, "Besides a solution, we have a Project. Use this field to have a different Project" +
-        "name then the solution.");
+            this.toolTip1.SetToolTip(projectNameLabel, "Project name can be different to Solution name.");
             // 
             // projectRootNameSpaceLabel
             // 
@@ -130,7 +129,8 @@ namespace SolutionGenerator.Frontend
             solutionGuidLabel.TabIndex = 10;
             solutionGuidLabel.Text = "Solution Guid:";
             this.toolTip1.SetToolTip(solutionGuidLabel, "This Guid is used in the internal Visual Studio system and identifies the Solutio" +
-        "n. No need to change this, it is generated when the program starts.");
+        "n. No need to change this. A new Guid is generated everytime the program starts." +
+        "");
             // 
             // solutionNameLabel
             // 
@@ -151,6 +151,15 @@ namespace SolutionGenerator.Frontend
             targetFrameworkLabel.TabIndex = 14;
             targetFrameworkLabel.Text = "Target Framework:";
             this.toolTip1.SetToolTip(targetFrameworkLabel, "The version of .Net framework to build the project in.");
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new System.Drawing.Point(12, 225);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(91, 13);
+            label1.TabIndex = 14;
+            label1.Text = "ReadMe Content:";
             // 
             // projectAssemblyNameTextBox
             // 
@@ -226,7 +235,7 @@ namespace SolutionGenerator.Frontend
             this.btnGenerate.Name = "btnGenerate";
             this.btnGenerate.Size = new System.Drawing.Size(381, 23);
             this.btnGenerate.TabIndex = 7;
-            this.btnGenerate.Text = "Generate";
+            this.btnGenerate.Text = "Give me back 15 mins of my life.";
             this.btnGenerate.UseVisualStyleBackColor = true;
             this.btnGenerate.Click += new System.EventHandler(this.BtnGenerateClick);
             // 
@@ -258,15 +267,6 @@ namespace SolutionGenerator.Frontend
             this.richTextBox1.Size = new System.Drawing.Size(381, 191);
             this.richTextBox1.TabIndex = 15;
             this.richTextBox1.Text = "";
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(12, 225);
-            label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(91, 13);
-            label1.TabIndex = 14;
-            label1.Text = "ReadMe Content:";
             // 
             // GeneratorForm
             // 
