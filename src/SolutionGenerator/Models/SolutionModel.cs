@@ -23,7 +23,7 @@
             SolutionGuid = Guid.NewGuid().ToString("B");
             TestProjectGuid = Guid.NewGuid().ToString("B");
             TargetFramework = "v4.5";
-            SolutionReadme = "# {ProjectName}.\r\n\r\n----------------------------------------------";
+            SolutionReadme = "{ProjectName}.\r\n----------------------------------------------";
 
             IncludeTestProject    = true;
             IncludeGitIgnore      = true;
