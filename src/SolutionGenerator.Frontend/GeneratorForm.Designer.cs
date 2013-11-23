@@ -38,7 +38,6 @@ namespace SolutionGenerator.Frontend
             System.Windows.Forms.Label rootPathLabel;
             System.Windows.Forms.Label solutionGuidLabel;
             System.Windows.Forms.Label solutionNameLabel;
-            System.Windows.Forms.Label targetFrameworkLabel;
             System.Windows.Forms.Label label1;
             System.Windows.Forms.Label includeGitAttributeLabel;
             System.Windows.Forms.Label includeGitIgnoreLabel;
@@ -47,14 +46,15 @@ namespace SolutionGenerator.Frontend
             System.Windows.Forms.Label includeResharperLabel;
             System.Windows.Forms.Label includeStylecopLabel;
             System.Windows.Forms.Label includeTestProjectLabel;
+            System.Windows.Forms.Label targetFrameworkLabel1;
             this.projectAssemblyNameTextBox = new System.Windows.Forms.TextBox();
+            this.solutionModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.projectGuidTextBox = new System.Windows.Forms.TextBox();
             this.projectNameTextBox = new System.Windows.Forms.TextBox();
             this.projectRootNameSpaceTextBox = new System.Windows.Forms.TextBox();
             this.rootPathTextBox = new System.Windows.Forms.TextBox();
             this.solutionGuidTextBox = new System.Windows.Forms.TextBox();
             this.solutionNameTextBox = new System.Windows.Forms.TextBox();
-            this.targetFrameworkTextBox = new System.Windows.Forms.TextBox();
             this.btnGenerate = new System.Windows.Forms.Button();
             this.btnBrowse = new System.Windows.Forms.Button();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
@@ -69,7 +69,7 @@ namespace SolutionGenerator.Frontend
             this.includeResharperCheckBox = new System.Windows.Forms.CheckBox();
             this.includeStylecopCheckBox = new System.Windows.Forms.CheckBox();
             this.includeTestProjectCheckBox = new System.Windows.Forms.CheckBox();
-            this.solutionModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.targetFrameworkComboBox = new System.Windows.Forms.ComboBox();
             projectAssemblyNameLabel = new System.Windows.Forms.Label();
             projectGuidLabel = new System.Windows.Forms.Label();
             projectNameLabel = new System.Windows.Forms.Label();
@@ -77,7 +77,6 @@ namespace SolutionGenerator.Frontend
             rootPathLabel = new System.Windows.Forms.Label();
             solutionGuidLabel = new System.Windows.Forms.Label();
             solutionNameLabel = new System.Windows.Forms.Label();
-            targetFrameworkLabel = new System.Windows.Forms.Label();
             label1 = new System.Windows.Forms.Label();
             includeGitAttributeLabel = new System.Windows.Forms.Label();
             includeGitIgnoreLabel = new System.Windows.Forms.Label();
@@ -86,8 +85,9 @@ namespace SolutionGenerator.Frontend
             includeResharperLabel = new System.Windows.Forms.Label();
             includeStylecopLabel = new System.Windows.Forms.Label();
             includeTestProjectLabel = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
+            targetFrameworkLabel1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.solutionModelBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // projectAssemblyNameLabel
@@ -164,16 +164,6 @@ namespace SolutionGenerator.Frontend
             solutionNameLabel.Text = "Solution Name:";
             this.toolTip1.SetToolTip(solutionNameLabel, "Name for the main solution");
             // 
-            // targetFrameworkLabel
-            // 
-            targetFrameworkLabel.AutoSize = true;
-            targetFrameworkLabel.Location = new System.Drawing.Point(12, 198);
-            targetFrameworkLabel.Name = "targetFrameworkLabel";
-            targetFrameworkLabel.Size = new System.Drawing.Size(96, 13);
-            targetFrameworkLabel.TabIndex = 14;
-            targetFrameworkLabel.Text = "Target Framework:";
-            this.toolTip1.SetToolTip(targetFrameworkLabel, "The version of .Net framework to build the project in.");
-            // 
             // label1
             // 
             label1.AutoSize = true;
@@ -183,6 +173,78 @@ namespace SolutionGenerator.Frontend
             label1.TabIndex = 14;
             label1.Text = "ReadMe Content:";
             // 
+            // includeGitAttributeLabel
+            // 
+            includeGitAttributeLabel.AutoSize = true;
+            includeGitAttributeLabel.Location = new System.Drawing.Point(577, 15);
+            includeGitAttributeLabel.Name = "includeGitAttributeLabel";
+            includeGitAttributeLabel.Size = new System.Drawing.Size(103, 13);
+            includeGitAttributeLabel.TabIndex = 21;
+            includeGitAttributeLabel.Text = "Include Git Attribute:";
+            // 
+            // includeGitIgnoreLabel
+            // 
+            includeGitIgnoreLabel.AutoSize = true;
+            includeGitIgnoreLabel.Location = new System.Drawing.Point(577, 45);
+            includeGitIgnoreLabel.Name = "includeGitIgnoreLabel";
+            includeGitIgnoreLabel.Size = new System.Drawing.Size(94, 13);
+            includeGitIgnoreLabel.TabIndex = 23;
+            includeGitIgnoreLabel.Text = "Include Git Ignore:";
+            // 
+            // includeLicenseLabel
+            // 
+            includeLicenseLabel.AutoSize = true;
+            includeLicenseLabel.Location = new System.Drawing.Point(577, 75);
+            includeLicenseLabel.Name = "includeLicenseLabel";
+            includeLicenseLabel.Size = new System.Drawing.Size(85, 13);
+            includeLicenseLabel.TabIndex = 25;
+            includeLicenseLabel.Text = "Include License:";
+            // 
+            // includeReadmeLabel
+            // 
+            includeReadmeLabel.AutoSize = true;
+            includeReadmeLabel.Location = new System.Drawing.Point(577, 105);
+            includeReadmeLabel.Name = "includeReadmeLabel";
+            includeReadmeLabel.Size = new System.Drawing.Size(88, 13);
+            includeReadmeLabel.TabIndex = 27;
+            includeReadmeLabel.Text = "Include Readme:";
+            // 
+            // includeResharperLabel
+            // 
+            includeResharperLabel.AutoSize = true;
+            includeResharperLabel.Location = new System.Drawing.Point(577, 135);
+            includeResharperLabel.Name = "includeResharperLabel";
+            includeResharperLabel.Size = new System.Drawing.Size(97, 13);
+            includeResharperLabel.TabIndex = 29;
+            includeResharperLabel.Text = "Include Resharper:";
+            // 
+            // includeStylecopLabel
+            // 
+            includeStylecopLabel.AutoSize = true;
+            includeStylecopLabel.Location = new System.Drawing.Point(577, 165);
+            includeStylecopLabel.Name = "includeStylecopLabel";
+            includeStylecopLabel.Size = new System.Drawing.Size(89, 13);
+            includeStylecopLabel.TabIndex = 31;
+            includeStylecopLabel.Text = "Include Stylecop:";
+            // 
+            // includeTestProjectLabel
+            // 
+            includeTestProjectLabel.AutoSize = true;
+            includeTestProjectLabel.Location = new System.Drawing.Point(577, 195);
+            includeTestProjectLabel.Name = "includeTestProjectLabel";
+            includeTestProjectLabel.Size = new System.Drawing.Size(105, 13);
+            includeTestProjectLabel.TabIndex = 33;
+            includeTestProjectLabel.Text = "Include Test Project:";
+            // 
+            // targetFrameworkLabel1
+            // 
+            targetFrameworkLabel1.AutoSize = true;
+            targetFrameworkLabel1.Location = new System.Drawing.Point(12, 198);
+            targetFrameworkLabel1.Name = "targetFrameworkLabel1";
+            targetFrameworkLabel1.Size = new System.Drawing.Size(96, 13);
+            targetFrameworkLabel1.TabIndex = 35;
+            targetFrameworkLabel1.Text = "Target Framework:";
+            // 
             // projectAssemblyNameTextBox
             // 
             this.projectAssemblyNameTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.solutionModelBindingSource, "ProjectAssemblyName", true));
@@ -190,6 +252,10 @@ namespace SolutionGenerator.Frontend
             this.projectAssemblyNameTextBox.Name = "projectAssemblyNameTextBox";
             this.projectAssemblyNameTextBox.Size = new System.Drawing.Size(381, 20);
             this.projectAssemblyNameTextBox.TabIndex = 5;
+            // 
+            // solutionModelBindingSource
+            // 
+            this.solutionModelBindingSource.DataSource = typeof(SolutionGenerator.Models.SolutionModel);
             // 
             // projectGuidTextBox
             // 
@@ -238,14 +304,6 @@ namespace SolutionGenerator.Frontend
             this.solutionNameTextBox.Name = "solutionNameTextBox";
             this.solutionNameTextBox.Size = new System.Drawing.Size(381, 20);
             this.solutionNameTextBox.TabIndex = 2;
-            // 
-            // targetFrameworkTextBox
-            // 
-            this.targetFrameworkTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.solutionModelBindingSource, "TargetFramework", true));
-            this.targetFrameworkTextBox.Location = new System.Drawing.Point(152, 195);
-            this.targetFrameworkTextBox.Name = "targetFrameworkTextBox";
-            this.targetFrameworkTextBox.Size = new System.Drawing.Size(381, 20);
-            this.targetFrameworkTextBox.TabIndex = 6;
             // 
             // btnGenerate
             // 
@@ -296,15 +354,6 @@ namespace SolutionGenerator.Frontend
             this.chkStartVisualStudio.Text = "Start Visual Studio";
             this.chkStartVisualStudio.UseVisualStyleBackColor = true;
             // 
-            // includeGitAttributeLabel
-            // 
-            includeGitAttributeLabel.AutoSize = true;
-            includeGitAttributeLabel.Location = new System.Drawing.Point(577, 15);
-            includeGitAttributeLabel.Name = "includeGitAttributeLabel";
-            includeGitAttributeLabel.Size = new System.Drawing.Size(103, 13);
-            includeGitAttributeLabel.TabIndex = 21;
-            includeGitAttributeLabel.Text = "Include Git Attribute:";
-            // 
             // includeGitAttributeCheckBox
             // 
             this.includeGitAttributeCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("CheckState", this.solutionModelBindingSource, "IncludeGitAttribute", true));
@@ -313,15 +362,6 @@ namespace SolutionGenerator.Frontend
             this.includeGitAttributeCheckBox.Size = new System.Drawing.Size(104, 24);
             this.includeGitAttributeCheckBox.TabIndex = 22;
             this.includeGitAttributeCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // includeGitIgnoreLabel
-            // 
-            includeGitIgnoreLabel.AutoSize = true;
-            includeGitIgnoreLabel.Location = new System.Drawing.Point(577, 45);
-            includeGitIgnoreLabel.Name = "includeGitIgnoreLabel";
-            includeGitIgnoreLabel.Size = new System.Drawing.Size(94, 13);
-            includeGitIgnoreLabel.TabIndex = 23;
-            includeGitIgnoreLabel.Text = "Include Git Ignore:";
             // 
             // includeGitIgnoreCheckBox
             // 
@@ -332,15 +372,6 @@ namespace SolutionGenerator.Frontend
             this.includeGitIgnoreCheckBox.TabIndex = 24;
             this.includeGitIgnoreCheckBox.UseVisualStyleBackColor = true;
             // 
-            // includeLicenseLabel
-            // 
-            includeLicenseLabel.AutoSize = true;
-            includeLicenseLabel.Location = new System.Drawing.Point(577, 75);
-            includeLicenseLabel.Name = "includeLicenseLabel";
-            includeLicenseLabel.Size = new System.Drawing.Size(85, 13);
-            includeLicenseLabel.TabIndex = 25;
-            includeLicenseLabel.Text = "Include License:";
-            // 
             // includeLicenseCheckBox
             // 
             this.includeLicenseCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("CheckState", this.solutionModelBindingSource, "IncludeLicense", true));
@@ -349,15 +380,6 @@ namespace SolutionGenerator.Frontend
             this.includeLicenseCheckBox.Size = new System.Drawing.Size(104, 24);
             this.includeLicenseCheckBox.TabIndex = 26;
             this.includeLicenseCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // includeReadmeLabel
-            // 
-            includeReadmeLabel.AutoSize = true;
-            includeReadmeLabel.Location = new System.Drawing.Point(577, 105);
-            includeReadmeLabel.Name = "includeReadmeLabel";
-            includeReadmeLabel.Size = new System.Drawing.Size(88, 13);
-            includeReadmeLabel.TabIndex = 27;
-            includeReadmeLabel.Text = "Include Readme:";
             // 
             // includeReadmeCheckBox
             // 
@@ -368,15 +390,6 @@ namespace SolutionGenerator.Frontend
             this.includeReadmeCheckBox.TabIndex = 28;
             this.includeReadmeCheckBox.UseVisualStyleBackColor = true;
             // 
-            // includeResharperLabel
-            // 
-            includeResharperLabel.AutoSize = true;
-            includeResharperLabel.Location = new System.Drawing.Point(577, 135);
-            includeResharperLabel.Name = "includeResharperLabel";
-            includeResharperLabel.Size = new System.Drawing.Size(97, 13);
-            includeResharperLabel.TabIndex = 29;
-            includeResharperLabel.Text = "Include Resharper:";
-            // 
             // includeResharperCheckBox
             // 
             this.includeResharperCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("CheckState", this.solutionModelBindingSource, "IncludeResharper", true));
@@ -385,15 +398,6 @@ namespace SolutionGenerator.Frontend
             this.includeResharperCheckBox.Size = new System.Drawing.Size(104, 24);
             this.includeResharperCheckBox.TabIndex = 30;
             this.includeResharperCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // includeStylecopLabel
-            // 
-            includeStylecopLabel.AutoSize = true;
-            includeStylecopLabel.Location = new System.Drawing.Point(577, 165);
-            includeStylecopLabel.Name = "includeStylecopLabel";
-            includeStylecopLabel.Size = new System.Drawing.Size(89, 13);
-            includeStylecopLabel.TabIndex = 31;
-            includeStylecopLabel.Text = "Include Stylecop:";
             // 
             // includeStylecopCheckBox
             // 
@@ -404,15 +408,6 @@ namespace SolutionGenerator.Frontend
             this.includeStylecopCheckBox.TabIndex = 32;
             this.includeStylecopCheckBox.UseVisualStyleBackColor = true;
             // 
-            // includeTestProjectLabel
-            // 
-            includeTestProjectLabel.AutoSize = true;
-            includeTestProjectLabel.Location = new System.Drawing.Point(577, 195);
-            includeTestProjectLabel.Name = "includeTestProjectLabel";
-            includeTestProjectLabel.Size = new System.Drawing.Size(105, 13);
-            includeTestProjectLabel.TabIndex = 33;
-            includeTestProjectLabel.Text = "Include Test Project:";
-            // 
             // includeTestProjectCheckBox
             // 
             this.includeTestProjectCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("CheckState", this.solutionModelBindingSource, "IncludeTestProject", true));
@@ -422,15 +417,28 @@ namespace SolutionGenerator.Frontend
             this.includeTestProjectCheckBox.TabIndex = 34;
             this.includeTestProjectCheckBox.UseVisualStyleBackColor = true;
             // 
-            // solutionModelBindingSource
+            // targetFrameworkComboBox
             // 
-            this.solutionModelBindingSource.DataSource = typeof(SolutionGenerator.Models.SolutionModel);
+            this.targetFrameworkComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.solutionModelBindingSource, "TargetFramework", true));
+            this.targetFrameworkComboBox.FormattingEnabled = true;
+            this.targetFrameworkComboBox.Items.AddRange(new object[] {
+            "v2.0",
+            "v3.0",
+            "v3.5",
+            "v4.0",
+            "v4.5"});
+            this.targetFrameworkComboBox.Location = new System.Drawing.Point(152, 195);
+            this.targetFrameworkComboBox.Name = "targetFrameworkComboBox";
+            this.targetFrameworkComboBox.Size = new System.Drawing.Size(381, 21);
+            this.targetFrameworkComboBox.TabIndex = 36;
             // 
             // GeneratorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(715, 462);
+            this.ClientSize = new System.Drawing.Size(812, 462);
+            this.Controls.Add(targetFrameworkLabel1);
+            this.Controls.Add(this.targetFrameworkComboBox);
             this.Controls.Add(includeGitAttributeLabel);
             this.Controls.Add(this.includeGitAttributeCheckBox);
             this.Controls.Add(includeGitIgnoreLabel);
@@ -464,15 +472,13 @@ namespace SolutionGenerator.Frontend
             this.Controls.Add(solutionNameLabel);
             this.Controls.Add(this.solutionNameTextBox);
             this.Controls.Add(label1);
-            this.Controls.Add(targetFrameworkLabel);
-            this.Controls.Add(this.targetFrameworkTextBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "GeneratorForm";
             this.Text = "Solution Generator";
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.solutionModelBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -488,7 +494,6 @@ namespace SolutionGenerator.Frontend
         private System.Windows.Forms.TextBox rootPathTextBox;
         private System.Windows.Forms.TextBox solutionGuidTextBox;
         private System.Windows.Forms.TextBox solutionNameTextBox;
-        private System.Windows.Forms.TextBox targetFrameworkTextBox;
         private System.Windows.Forms.Button btnGenerate;
         private System.Windows.Forms.Button btnBrowse;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
@@ -503,5 +508,6 @@ namespace SolutionGenerator.Frontend
         private System.Windows.Forms.CheckBox includeResharperCheckBox;
         private System.Windows.Forms.CheckBox includeStylecopCheckBox;
         private System.Windows.Forms.CheckBox includeTestProjectCheckBox;
+        private System.Windows.Forms.ComboBox targetFrameworkComboBox;
     }
 }
