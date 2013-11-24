@@ -180,36 +180,36 @@ namespace SolutionGenerator.Frontend
             includeGitAttributeLabel.AutoSize = true;
             includeGitAttributeLabel.Location = new System.Drawing.Point(20, 24);
             includeGitAttributeLabel.Name = "includeGitAttributeLabel";
-            includeGitAttributeLabel.Size = new System.Drawing.Size(65, 13);
+            includeGitAttributeLabel.Size = new System.Drawing.Size(63, 13);
             includeGitAttributeLabel.TabIndex = 21;
-            includeGitAttributeLabel.Text = "Git Attribute:";
+            includeGitAttributeLabel.Text = ".gitAttribute:";
             // 
             // includeGitIgnoreLabel
             // 
             includeGitIgnoreLabel.AutoSize = true;
             includeGitIgnoreLabel.Location = new System.Drawing.Point(20, 54);
             includeGitIgnoreLabel.Name = "includeGitIgnoreLabel";
-            includeGitIgnoreLabel.Size = new System.Drawing.Size(56, 13);
+            includeGitIgnoreLabel.Size = new System.Drawing.Size(54, 13);
             includeGitIgnoreLabel.TabIndex = 23;
-            includeGitIgnoreLabel.Text = "Git Ignore:";
+            includeGitIgnoreLabel.Text = ".gitIgnore:";
             // 
             // includeLicenseLabel
             // 
             includeLicenseLabel.AutoSize = true;
             includeLicenseLabel.Location = new System.Drawing.Point(20, 84);
             includeLicenseLabel.Name = "includeLicenseLabel";
-            includeLicenseLabel.Size = new System.Drawing.Size(47, 13);
+            includeLicenseLabel.Size = new System.Drawing.Size(61, 13);
             includeLicenseLabel.TabIndex = 25;
-            includeLicenseLabel.Text = "License:";
+            includeLicenseLabel.Text = "License.txt:";
             // 
             // includeReadmeLabel
             // 
             includeReadmeLabel.AutoSize = true;
             includeReadmeLabel.Location = new System.Drawing.Point(20, 114);
             includeReadmeLabel.Name = "includeReadmeLabel";
-            includeReadmeLabel.Size = new System.Drawing.Size(50, 13);
+            includeReadmeLabel.Size = new System.Drawing.Size(67, 13);
             includeReadmeLabel.TabIndex = 27;
-            includeReadmeLabel.Text = "Readme:";
+            includeReadmeLabel.Text = "Readme.md:";
             // 
             // includeResharperLabel
             // 
@@ -219,6 +219,7 @@ namespace SolutionGenerator.Frontend
             includeResharperLabel.Size = new System.Drawing.Size(59, 13);
             includeResharperLabel.TabIndex = 29;
             includeResharperLabel.Text = "Resharper:";
+            this.toolTip1.SetToolTip(includeResharperLabel, "Resharper settings file.");
             // 
             // includeStylecopLabel
             // 
@@ -228,6 +229,7 @@ namespace SolutionGenerator.Frontend
             includeStylecopLabel.Size = new System.Drawing.Size(51, 13);
             includeStylecopLabel.TabIndex = 31;
             includeStylecopLabel.Text = "Stylecop:";
+            this.toolTip1.SetToolTip(includeStylecopLabel, "Stylecop settings file");
             // 
             // includeTestProjectLabel
             // 
