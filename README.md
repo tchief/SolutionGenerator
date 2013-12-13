@@ -9,6 +9,8 @@ This project was born out of the need to have a "standard" for creating projects
 
 We follow the standards documented here: https://github.com/Orcomp/Standards, but the tool should be flexible enough to be customised to your own needs.
 
+![ScreenShot](/img/screenshot.png)
+
 ## Features
 
 Things SolutionGenerator will do for you **at the click of a button**:
