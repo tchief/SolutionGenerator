@@ -1,4 +1,8 @@
-﻿namespace SolutionGenerator.Models
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+
+namespace SolutionGenerator.Models
 {
     using System;
     using Base;
@@ -17,6 +21,7 @@
         private string _solutionReadme;
         private bool _includeReadme;
         private string _projectType;
+        private string _licenseName;
 
         public SolutionModel()
         {
@@ -34,8 +39,11 @@
             IncludeLicense        = true;
             IncludeReadme = true;
 
+            ProjectType = "Library";
+            AvailableLicenses = Directory.EnumerateFiles("./Licenses").Select(Path.GetFileNameWithoutExtension).ToList();
         }
 
+        public bool OpenFolderOnCreate { get; set; }
         public bool InitiliazeGit { get; set; }
         public bool IncludeTestProject { get; set; }
         public bool IncludeGitIgnore { get; set; }
@@ -53,6 +61,20 @@
                     return;
                 }
                 _includeReadme = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public List<string> AvailableLicenses { get; set; }
+        public string LicenseName
+        {
+            get
+            {
+                return _licenseName;
+            }
+            set
+            {
+                _licenseName = value;
                 OnPropertyChanged();
             }
         }
@@ -240,5 +262,7 @@
                 OnPropertyChanged();
             }
         }
+
+        public string LicenseText { get; set; }
     }
 }

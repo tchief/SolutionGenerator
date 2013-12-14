@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.IO;
 using SolutionGenerator.Models;
 
 namespace SolutionGenerator.Frontend
@@ -38,6 +39,10 @@ namespace SolutionGenerator.Frontend
                             _solutionModel.ProjectRootNameSpace = _solutionModel.ProjectName;
                             _solutionModel.ProjectAssemblyName = _solutionModel.ProjectName;
                             break;
+                        case "LicenseName":
+                            _solutionModel.LicenseText =
+                                File.ReadAllText(string.Format("./Licenses/{0}.txt", _solutionModel.LicenseName));
+                            break;
                     }
                 };
 
@@ -57,10 +62,16 @@ namespace SolutionGenerator.Frontend
             var solutionGeneratorService = new SolutionGeneratorService();
             solutionGeneratorService.DoWork(_solutionModel);
 
+            MessageBox.Show(string.Format("Solution {0} created with root path '{1}'", _solutionModel.SolutionName, _solutionModel.RootPath));
+
             if (chkStartVisualStudio.Checked)
             {
                 var fileName = string.Format("{0}/src/{1}.sln", _solutionModel.RootPath, _solutionModel.SolutionName);
                 Process.Start(fileName);
+            }
+            if (_solutionModel.OpenFolderOnCreate)
+            {
+                Process.Start(_solutionModel.RootPath);
             }
         }
 
