@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace SolutionGenerator
+﻿namespace SolutionGenerator
 {
     using System.IO;
     using System.Text.RegularExpressions;

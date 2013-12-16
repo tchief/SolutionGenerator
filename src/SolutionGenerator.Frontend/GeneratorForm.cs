@@ -1,12 +1,11 @@
-﻿using System.Diagnostics;
-using System.IO;
-using SolutionGenerator.Models;
-
-namespace SolutionGenerator.Frontend
+﻿namespace SolutionGenerator.Frontend
 {
     using System;
     using System.Linq;
     using System.Windows.Forms;
+    using System.Diagnostics;
+    using System.IO;
+    using SolutionGenerator.Models;
 
     public partial class GeneratorForm : Form
     {
