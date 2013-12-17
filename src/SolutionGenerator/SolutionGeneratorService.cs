@@ -9,6 +9,7 @@
         private const string SolutionTemplate = "./Templates/SolutionTemplate.txt";
         private const string SolutionWithTestTemplate = "./Templates/SolutionWithTestTemplate.txt";
         private const string ProjectTemplate = "./Templates/ProjectTemplate.txt";
+        private const string WpfProjectTemplate = "./Templates/WPF/ProjectTemplate.txt";
         private const string GitAttributeTemplate = "./Templates/gitAttributeTemplate.txt";
         private const string GitIgnoreTemplate = "./Templates/gitIgnoreTemplate.txt";
         private const string ReadmeTemplate = "./Templates/ReadmeTemplate.txt";
@@ -77,6 +78,7 @@
         {
             string projectRoot = string.Format("{0}/{1}/", root.FullName, model.ProjectName);
             var directoryInfo = new DirectoryInfo(projectRoot);
+            var projectTemplate = ProjectTemplate;
 
             if (!directoryInfo.Exists)
             {
@@ -103,6 +105,7 @@
             }
             else if (model.ProjectType == "WPF")
             {
+                projectTemplate = WpfProjectTemplate;
                 File.WriteAllText(projectRoot + "App.xaml", TemplateRenderer.Render(AppXaml, projectModel));
                 File.WriteAllText(projectRoot + "App.xaml.cs", TemplateRenderer.Render(AppXamlCs, projectModel));
                 File.WriteAllText(projectRoot + "MainWindow.xaml", TemplateRenderer.Render(MainWindowXaml, projectModel));
@@ -116,7 +119,8 @@
             }
 
             var projectFile = new FileInfo(projectRoot + projectModel.ProjectName + ".csproj");
-            File.WriteAllText(projectFile.FullName, TemplateRenderer.Render(ProjectTemplate, projectModel));
+            
+            File.WriteAllText(projectFile.FullName, TemplateRenderer.Render(projectTemplate, projectModel));
             
             return projectFile;
         }
