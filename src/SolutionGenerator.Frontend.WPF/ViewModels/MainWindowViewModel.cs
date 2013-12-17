@@ -92,6 +92,11 @@ namespace SolutionGenerator.Frontend.WPF.ViewModels
                 _processService.StartProcess(Solution.RootPath);
             }
         }
+
+        protected override void Initialize()
+        {
+            Log.Info("Welcome to the Solution Generator");
+        }
         #endregion
 
     }
