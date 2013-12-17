@@ -1,0 +1,34 @@
+﻿<catel:DataWindow x:Class="SolutionGenerator.Frontend.WPF.Views.MainWindow"
+                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+				  xmlns:catel="http://catel.codeplex.com"
+				  xmlns:views="clr-namespace:SolutionGenerator.Frontend.WPF.Views"
+				  ShowInTaskbar="True" SizeToContent="WidthAndHeight" WindowStartupLocation="Manual">
+
+    <!-- Resources -->
+    <catel:DataWindow.Resources>
+    </catel:DataWindow.Resources>
+
+    <!-- Content -->
+    <catel:StackGrid x:Name="LayoutRoot">
+        <catel:StackGrid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </catel:StackGrid.ColumnDefinitions>
+
+        <catel:StackGrid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="200" />
+        </catel:StackGrid.RowDefinitions>
+
+        <views:SolutionOptionsView DataContext="{Binding Solution}" />
+        <views:IncludeOptionsView DataContext="{Binding Solution}" />
+
+        <Button Command="{Binding Generate}" Content="Give me back 15 minutes of my life!" HorizontalAlignment="Right" />
+        <catel:EmptyCell />
+
+        <views:ConsoleView Width="800" catel:StackGrid.ColumnSpan="2" />
+
+    </catel:StackGrid>
+</catel:DataWindow>

@@ -5,7 +5,9 @@
     using System.Windows.Forms;
     using System.Diagnostics;
     using System.IO;
+    using Catel.IoC;
     using SolutionGenerator.Models;
+    using SolutionGenerator.Services;
 
     public partial class GeneratorForm : Form
     {
@@ -58,7 +60,8 @@
 
         private void BtnGenerateClick(object sender, EventArgs e)
         {
-            var solutionGeneratorService = new SolutionGeneratorService();
+            var dependencyResolver = this.GetDependencyResolver();
+            var solutionGeneratorService = dependencyResolver.Resolve<ISolutionGeneratorService>();
             solutionGeneratorService.DoWork(_solutionModel);
 
             MessageBox.Show(string.Format("Solution {0} created with root path '{1}'", _solutionModel.SolutionName, _solutionModel.RootPath));
