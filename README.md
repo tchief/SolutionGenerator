@@ -32,6 +32,12 @@ Once you click the button to create the solution, it will do all of the above, a
 - You can change the content of the various template files in the "\template" folder.
 - You can also customize the folder structure.
 
+## Building The Solution
+
+You will need Nuget installed on your computer.
+
+The first time you build the solution, Nuget will fetch the required packages. (If it fails to do this you may have to right click on the solution and enable "Nuget Restore".) and then rebuild the solution again. This time it should work.
+
 ## Roadmap
 
 - **SolutionChecker** : will be used to check whether the solution structure and code conforms to a set of standards.

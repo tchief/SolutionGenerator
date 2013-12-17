@@ -28,7 +28,7 @@
             SolutionGuid = Guid.NewGuid().ToString("B");
             TestProjectGuid = Guid.NewGuid().ToString("B");
             TargetFramework = "v4.5";
-            SolutionReadme = "{ProjectName}.\r\n----------------------------------------------";
+            SolutionReadme = "{ProjectName}\r\n----------------------------------------------";
 
             IncludeTestProject    = true;
             IncludeGitIgnore      = true;
@@ -36,8 +36,9 @@
             IncludeResharper      = true;
             IncludeStylecop       = true;
             IncludeLicense        = true;
-            IncludeReadme = true;
-            LicenseName = "MIT";
+            IncludeReadme         = true;
+            LicenseName           = "MIT";
+            InitiliazeGit         = true;
 
             ProjectType = "Library";
             AvailableLicenses = Directory.EnumerateFiles("./Licenses").Select(Path.GetFileNameWithoutExtension).ToList();
