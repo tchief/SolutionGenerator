@@ -4,6 +4,13 @@
 
     public class ProjectModel : ModelBase
     {
+        public ProjectModel(string projectGuid)
+        {
+            ProjectGuid = projectGuid;
+            ProjectReferences = string.Empty;
+            FileIncludes = string.Empty;
+        }
+
         public string ProjectName { get; set; }
         public string ProjectAssemblyName { get; set; }
         public string ProjectRootNameSpace { get; set; }
@@ -18,13 +25,6 @@
 
         public string ProjectReferences { get; set; }
         public string FileIncludes { get; set; }
-
-        public ProjectModel(string projectGuid)
-        {
-            ProjectGuid = projectGuid;
-            ProjectReferences = string.Empty;
-            FileIncludes = string.Empty;
-        }
 
         public string ProjectTypeToProjectOutputType(string projectType)
         {

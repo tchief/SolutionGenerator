@@ -198,7 +198,6 @@
             FileInfo solutionFile;
             if (model.IncludeResharper)
             {
-
                 solutionFile = new FileInfo(string.Format("{0}/resharper.settings", root.FullName));
                 File.WriteAllText(solutionFile.FullName, TemplateRenderer.Render(ResharperSettingsTemplate, model));
                 files.Add(solutionFile);

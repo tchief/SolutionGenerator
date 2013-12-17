@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-
-namespace SolutionGenerator.Models
+﻿namespace SolutionGenerator.Models
 {
     using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
     using Base;
 
     public class SolutionModel : ModelBase
@@ -38,6 +37,7 @@ namespace SolutionGenerator.Models
             IncludeStylecop       = true;
             IncludeLicense        = true;
             IncludeReadme = true;
+            LicenseName = "MIT";
 
             ProjectType = "Library";
             AvailableLicenses = Directory.EnumerateFiles("./Licenses").Select(Path.GetFileNameWithoutExtension).ToList();
@@ -53,7 +53,10 @@ namespace SolutionGenerator.Models
         public bool IncludeLicense { get; set; }
         public bool IncludeReadme
         {
-            get { return _includeReadme; }
+            get
+            {
+                return _includeReadme;
+            }
             set
             {
                 if (value == _includeReadme)
@@ -251,7 +254,10 @@ namespace SolutionGenerator.Models
 
         public string ProjectType
         {
-            get { return _projectType; }
+            get
+            {
+                return _projectType;
+            }
             set
             {
                 if (value == _projectType)
