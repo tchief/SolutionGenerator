@@ -1,6 +1,6 @@
 ﻿namespace SolutionGenerator.Models
 {
-    using Base;
+    using Catel.Data;
 
     public class ProjectModel : ModelBase
     {

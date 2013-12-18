@@ -1,8 +1,8 @@
-﻿namespace SolutionGenerator
+﻿namespace SolutionGenerator.Services
 {
     using System.IO;
 
-    public class DirectoryCreator
+    public class DirectoryCreator : IDirectoryCreator
     {
         public DirectoryCreator(FileInfo folderConfigFile, DirectoryInfo rootFolder)
         {

@@ -1,17 +1,17 @@
-﻿namespace SolutionGenerator
+﻿namespace SolutionGenerator.Services
 {
     using System.IO;
     using System.Text.RegularExpressions;
 
-    public class TemplateRenderer
+    public class TemplateRenderer : ITemplateRenderer
     {
-        private static string _templateRegex = @"[^{]({[^{].*?})";
+        private const string TemplateRegex = @"[^{]({[^{].*?})";
 
-        public static string Render<T>(string templateContent, T model)
+        public string Render<T>(string templateContent, T model)
         {
             string text = File.ReadAllText(templateContent);
 
-            return Regex.Replace(text, _templateRegex, match =>
+            return Regex.Replace(text, TemplateRegex, match =>
                 {
                     var indexOfFirst = match.Value.IndexOf('{');
                     var prefix = indexOfFirst > 0 ? match.Value.Substring(0, 1) : string.Empty;
@@ -21,7 +21,7 @@
                 }).Replace("{{", "{").Replace("}}", "}");
         }
         
-        public static string RenderAndRenderContent<T>(string templateContent, T model)
+        public string RenderAndRenderContent<T>(string templateContent, T model)
         {
             string text = File.ReadAllText(templateContent);
 
@@ -34,8 +34,8 @@
                 return prefix + model.GetType().GetProperty(replace).GetValue(model).ToString();
             };
 
-            string resolvedTemplate = Regex.Replace(text, _templateRegex, matchEvaluator);
-            return Regex.Replace(resolvedTemplate, _templateRegex, matchEvaluator).Replace("{{", "{").Replace("}}", "}");
+            string resolvedTemplate = Regex.Replace(text, TemplateRegex, matchEvaluator);
+            return Regex.Replace(resolvedTemplate, TemplateRegex, matchEvaluator).Replace("{{", "{").Replace("}}", "}");
         }
     }
 }
