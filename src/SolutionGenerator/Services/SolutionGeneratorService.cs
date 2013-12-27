@@ -1,12 +1,21 @@
-﻿namespace SolutionGenerator.Services
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="SolutionGeneratorService.cs" company="Orcomp development team">
+//   Copyright (c) 2012 - 2013 Orcomp development team. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
+
+namespace SolutionGenerator.Services
 {
     using System.Collections.Generic;
     using System.IO;
     using Catel;
-    using Models;
+    using Catel.Logging;
+    using SolutionGenerator.Models;
 
     public class SolutionGeneratorService : ISolutionGeneratorService
     {
+        #region Constants
         private const string SolutionTemplate = "./Templates/SolutionTemplate.txt";
         private const string SolutionWithTestTemplate = "./Templates/SolutionWithTestTemplate.txt";
         private const string ProjectTemplate = "./Templates/ProjectTemplate.txt";
@@ -30,13 +39,19 @@
         private const string Form1Cs = "./Templates/Winform/form1Cs.txt";
 
         private const string FolderStructureFile = "./folders.txt";
+        #endregion
 
+        private static readonly ILog Log = LogManager.GetCurrentClassLogger();
+
+        #region Fields
         private readonly IGitService _gitService;
-        private readonly ITemplateRenderer _templateRenderer;
         private readonly IProjectTypeConverterService _projectTypeConverterService;
         private readonly IReferencesService _referencesService;
+        private readonly ITemplateRenderer _templateRenderer;
+        #endregion
 
-        public SolutionGeneratorService(IGitService gitService, ITemplateRenderer templateRenderer, 
+        #region Constructors
+        public SolutionGeneratorService(IGitService gitService, ITemplateRenderer templateRenderer,
             IProjectTypeConverterService projectTypeConverterService, IReferencesService referencesService)
         {
             Argument.IsNotNull(() => gitService);
@@ -49,34 +64,42 @@
             _projectTypeConverterService = projectTypeConverterService;
             _referencesService = referencesService;
         }
+        #endregion
 
-        public void DoWork(Solution model)
+        #region ISolutionGeneratorService Members
+        public void DoWork(Solution solution)
         {
-            Argument.IsNotNull(() => model);
+            Argument.IsNotNull(() => solution);
+
+            Log.Info("Generating solution '{0}'", solution);
 
             // create folders under root path
-            var rootDirectoryInfo = new DirectoryInfo(model.RootPath);
+            var rootDirectoryInfo = new DirectoryInfo(solution.RootPath);
             CreateFolderStructure(rootDirectoryInfo);
-            CreateSolutionAssets(rootDirectoryInfo, model);
+            CreateSolutionAssets(rootDirectoryInfo, solution);
 
             // create files under root/src path
-            rootDirectoryInfo = new DirectoryInfo(string.Format("{0}/src/", model.RootPath));
-            CreateSolutionFile(rootDirectoryInfo, model);
-            CreateProjectFile(rootDirectoryInfo, model);
-            if (model.IncludeTestProject)
+            rootDirectoryInfo = new DirectoryInfo(string.Format("{0}/src/", solution.RootPath));
+            CreateSolutionFile(rootDirectoryInfo, solution);
+            CreateProjectFile(rootDirectoryInfo, solution);
+            if (solution.IncludeTestProject)
             {
-                CreateTestProjectFile(rootDirectoryInfo, model);
+                CreateTestProjectFile(rootDirectoryInfo, solution);
             }
-            CreateProjectAssets(rootDirectoryInfo, model);
+            CreateProjectAssets(rootDirectoryInfo, solution);
 
-            if (model.InitializeGit)
+            if (solution.InitializeGit)
             {
                 _gitService.InitGitRepository(rootDirectoryInfo.FullName);
             }
         }
+        #endregion
 
+        #region Methods
         private void CreateFolderStructure(DirectoryInfo root)
         {
+            Log.Info("Creating folder structure");
+
             if (!root.Exists)
             {
                 root.Create();
@@ -88,6 +111,8 @@
 
         private FileInfo CreateSolutionFile(DirectoryInfo root, Solution model)
         {
+            Log.Info("Creating solution file");
+
             var templateToRender = model.IncludeTestProject ? SolutionWithTestTemplate : SolutionTemplate;
             var solutionFile = new FileInfo(string.Format("{0}{1}.sln", root.FullName, model.SolutionName));
 
@@ -98,6 +123,8 @@
 
         private FileInfo CreateProjectFile(DirectoryInfo root, Solution solution)
         {
+            Log.Info("Creating project file");
+
             string projectRoot = string.Format("{0}/{1}/", root.FullName, solution.ProjectName);
             var directoryInfo = new DirectoryInfo(projectRoot);
             var projectTemplate = ProjectTemplate;
@@ -222,6 +249,8 @@
 
         private FileInfo[] CreateProjectAssets(DirectoryInfo root, Solution model)
         {
+            Log.Info("Creating project assets");
+
             var files = new List<FileInfo>();
 
             FileInfo solutionFile;
@@ -231,13 +260,16 @@
                 File.WriteAllText(solutionFile.FullName, _templateRenderer.Render(ResharperSettingsTemplate, model));
                 files.Add(solutionFile);
             }
+
             if (model.IncludeStylecop)
             {
                 solutionFile = new FileInfo(string.Format("{0}/Settings.StyleCop", root.FullName));
                 File.WriteAllText(solutionFile.FullName, _templateRenderer.Render(StyleCopTemplate, model));
                 files.Add(solutionFile);
             }
+
             return files.ToArray();
         }
+        #endregion
     }
 }

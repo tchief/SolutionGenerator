@@ -27,5 +27,10 @@ namespace SolutionGenerator.Models
 
         [DefaultValue("")]
         public string FileIncludes { get; set; }
+
+        public override string ToString()
+        {
+            return Name ?? string.Empty;
+        }
     }
 }

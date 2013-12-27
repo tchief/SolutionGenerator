@@ -7,8 +7,10 @@
 
 namespace SolutionGenerator.Frontend.WPF.ViewModels
 {
+    using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.IO;
     using Catel;
     using Catel.Logging;
     using Catel.MVVM;
@@ -17,15 +19,19 @@ namespace SolutionGenerator.Frontend.WPF.ViewModels
 
     public class SolutionOptionsViewModel : ViewModelBase
     {
+        private static readonly ILog Log = LogManager.GetCurrentClassLogger();
+
         private readonly ISelectDirectoryService _selectDirectoryService;
 
         #region Constructors
         public SolutionOptionsViewModel(Solution solution, ISelectDirectoryService selectDirectoryService)
         {
-            _selectDirectoryService = selectDirectoryService;
             Argument.IsNotNull(() => solution);
+            Argument.IsNotNull(() => selectDirectoryService);
 
             Solution = solution;
+            _selectDirectoryService = selectDirectoryService;
+            _selectDirectoryService.ShowNewFolderButton = true;
 
             AvailableLicenseNames = Solution.AvailableLicenses;
             AvailableProjectTypes = new ObservableCollection<ProjectTypes>(Enum<ProjectTypes>.GetValues());
@@ -39,11 +45,7 @@ namespace SolutionGenerator.Frontend.WPF.ViewModels
 
         #region Properties
         [Model]
-        [Catel.Fody.Expose("SolutionName")]
-        [Catel.Fody.Expose("ProjectName")]
         [Catel.Fody.Expose("ProjectType")]
-        [Catel.Fody.Expose("ProjectRootNameSpace")]
-        [Catel.Fody.Expose("ProjectAssemblyName")]
         [Catel.Fody.Expose("TargetFramework")]
         [Catel.Fody.Expose("LicenseName")]
         [Catel.Fody.Expose("Readme", "SolutionReadme")]
@@ -51,6 +53,18 @@ namespace SolutionGenerator.Frontend.WPF.ViewModels
 
         [ViewModelToModel("Solution")]
         public string RootPath { get; set; }
+
+        [ViewModelToModel("Solution")]
+        public string SolutionName { get; set; }
+
+        [ViewModelToModel("Solution")]
+        public string ProjectName { get; set; }
+
+        [ViewModelToModel("Solution")]
+        public string ProjectRootNameSpace { get; set; }
+
+        [ViewModelToModel("Solution")]
+        public string ProjectAssemblyName { get; set; }
 
         public ObservableCollection<ProjectTypes> AvailableProjectTypes { get; private set; }
 
@@ -76,5 +90,39 @@ namespace SolutionGenerator.Frontend.WPF.ViewModels
             }
         }
         #endregion
+
+        private void OnRootPathChanged()
+        {
+            if (!string.IsNullOrWhiteSpace(RootPath))
+            {
+                if (!Directory.Exists(RootPath))
+                {
+                    return;
+                }
+
+                var directoryInfo = new DirectoryInfo(RootPath);
+                string solutionName = directoryInfo.Name;
+
+                if (string.IsNullOrWhiteSpace(SolutionName))
+                {
+                    SolutionName = solutionName;
+                }
+
+                if (string.IsNullOrWhiteSpace(ProjectName))
+                {
+                    ProjectName = solutionName;
+                }
+
+                if (string.IsNullOrWhiteSpace(ProjectRootNameSpace))
+                {
+                    ProjectRootNameSpace = solutionName;
+                }
+
+                if (string.IsNullOrWhiteSpace(ProjectAssemblyName))
+                {
+                    ProjectAssemblyName = solutionName;
+                }
+            }
+        }
     }
 }

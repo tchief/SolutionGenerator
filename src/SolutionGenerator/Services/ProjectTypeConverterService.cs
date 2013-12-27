@@ -8,6 +8,7 @@
 namespace SolutionGenerator.Services
 {
     using System;
+    using System.ComponentModel;
     using Catel;
 
     public class ProjectTypeConverterService : IProjectTypeConverterService
@@ -29,6 +30,9 @@ namespace SolutionGenerator.Services
 
                 case ProjectTypes.Test:
                     return ProjectOutputTypes.Test;
+
+                case ProjectTypes.Library:
+                    return ProjectOutputTypes.Library;
 
                 default:
                     throw new ArgumentOutOfRangeException("projectType");

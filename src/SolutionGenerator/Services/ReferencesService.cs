@@ -22,7 +22,7 @@ namespace SolutionGenerator.Services
 
             var coreReferences = GetCoreReferences();
 
-            ProjectReference additionalReferences;
+            ProjectReference additionalReferences = null;
 
             switch (project.ProjectType)
             {
@@ -40,6 +40,9 @@ namespace SolutionGenerator.Services
 
                 case ProjectTypes.Test:
                     additionalReferences = GetNUnitReferences();
+                    break;
+
+                case ProjectTypes.Library:
                     break;
 
                 default:

@@ -1,4 +1,11 @@
-﻿namespace SolutionGenerator.Models
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Solution.cs" company="Orcomp development team">
+//   Copyright (c) 2012 - 2013 Orcomp development team. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
+
+namespace SolutionGenerator.Models
 {
     using System;
     using System.Collections.Generic;
@@ -6,11 +13,11 @@
     using System.ComponentModel.DataAnnotations;
     using System.IO;
     using System.Linq;
-    using System.Runtime.CompilerServices;
     using Catel.Data;
 
     public class Solution : ModelBase
     {
+        #region Constructors
         public Solution()
         {
             ProjectGuid = Guid.NewGuid().ToString("B");
@@ -19,7 +26,9 @@
 
             AvailableLicenses = Directory.EnumerateFiles("./Licenses").Select(Path.GetFileNameWithoutExtension).ToList();
         }
+        #endregion
 
+        #region Properties
         public bool OpenFolderOnCreate { get; set; }
 
         [DefaultValue(true)]
@@ -82,10 +91,13 @@
         public ProjectTypes ProjectType { get; set; }
 
         public string LicenseText { get; set; }
+        #endregion
 
+        #region Methods
         public override string ToString()
         {
             return SolutionName ?? string.Empty;
         }
+        #endregion
     }
 }
