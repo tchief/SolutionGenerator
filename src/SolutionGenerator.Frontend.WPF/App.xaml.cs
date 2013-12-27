@@ -29,7 +29,7 @@
             serviceLocator.RegisterInstance<IConsoleService>(new ConsoleService());
 
             // Force load assembly
-            Console.WriteLine(typeof (SolutionModel));
+            Console.WriteLine(typeof (Solution));
 
             base.OnStartup(e);
         }

@@ -10,20 +10,21 @@ namespace SolutionGenerator.Frontend.WPF.ViewModels
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using Catel;
+    using Catel.Logging;
     using Catel.MVVM;
     using SolutionGenerator.Models;
 
     public class SolutionOptionsViewModel : ViewModelBase
     {
         #region Constructors
-        public SolutionOptionsViewModel(SolutionModel solution)
+        public SolutionOptionsViewModel(Solution solution)
         {
             Argument.IsNotNull(() => solution);
 
             Solution = solution;
 
             AvailableLicenseNames = Solution.AvailableLicenses;
-            AvailableProjectOutputTypes = new ObservableCollection<string>(new[] { "Library", "WPF", "WinForms", "Console" });
+            AvailableProjectTypes = new ObservableCollection<ProjectTypes>(Enum<ProjectTypes>.GetValues());
 
             // TODO: Read from registry instead in service
             AvailableTargetFrameworks = new ObservableCollection<string>(new[] { "v2.0", "v3.0", "v3.5", "v4.0", "v4.5" });
@@ -41,9 +42,9 @@ namespace SolutionGenerator.Frontend.WPF.ViewModels
         [Catel.Fody.Expose("TargetFramework")]
         [Catel.Fody.Expose("LicenseName")]
         [Catel.Fody.Expose("Readme", "SolutionReadme")]
-        public SolutionModel Solution { get; private set; }
+        public Solution Solution { get; private set; }
 
-        public ObservableCollection<string> AvailableProjectOutputTypes { get; private set; }
+        public ObservableCollection<ProjectTypes> AvailableProjectTypes { get; private set; }
 
         public ObservableCollection<string> AvailableTargetFrameworks { get; private set; }
 

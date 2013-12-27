@@ -19,11 +19,18 @@
         <catel:StackGrid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="200" />
         </catel:StackGrid.RowDefinitions>
 
         <views:SolutionOptionsView DataContext="{Binding Solution}" />
         <views:IncludeOptionsView DataContext="{Binding Solution}" />
+
+        <WrapPanel Orientation="Horizontal">
+            <CheckBox Content="Open folder after creating solution" />
+            <CheckBox Content="Start Visual Studio after creating solution" />
+        </WrapPanel>
+        <catel:EmptyCell />
 
         <Button Command="{Binding Generate}" Content="Give me back 15 minutes of my life!" HorizontalAlignment="Right" />
         <catel:EmptyCell />

@@ -1,10 +1,11 @@
-﻿namespace SolutionGenerator
+﻿namespace SolutionGenerator.Services
 {
     using System.Collections.Generic;
     using System.IO;
+    using Catel;
     using Models;
 
-    public class SolutionGeneratorService
+    public class SolutionGeneratorService : ISolutionGeneratorService
     {
         private const string SolutionTemplate = "./Templates/SolutionTemplate.txt";
         private const string SolutionWithTestTemplate = "./Templates/SolutionWithTestTemplate.txt";
@@ -30,8 +31,29 @@
 
         private const string FolderStructureFile = "./folders.txt";
 
-        public void DoWork(SolutionModel model)
+        private readonly IGitService _gitService;
+        private readonly ITemplateRenderer _templateRenderer;
+        private readonly IProjectTypeConverterService _projectTypeConverterService;
+        private readonly IReferencesService _referencesService;
+
+        public SolutionGeneratorService(IGitService gitService, ITemplateRenderer templateRenderer, 
+            IProjectTypeConverterService projectTypeConverterService, IReferencesService referencesService)
         {
+            Argument.IsNotNull(() => gitService);
+            Argument.IsNotNull(() => templateRenderer);
+            Argument.IsNotNull(() => projectTypeConverterService);
+            Argument.IsNotNull(() => referencesService);
+
+            _gitService = gitService;
+            _templateRenderer = templateRenderer;
+            _projectTypeConverterService = projectTypeConverterService;
+            _referencesService = referencesService;
+        }
+
+        public void DoWork(Solution model)
+        {
+            Argument.IsNotNull(() => model);
+
             // create folders under root path
             var rootDirectoryInfo = new DirectoryInfo(model.RootPath);
             CreateFolderStructure(rootDirectoryInfo);
@@ -47,9 +69,9 @@
             }
             CreateProjectAssets(rootDirectoryInfo, model);
 
-            if (model.InitiliazeGit)
+            if (model.InitializeGit)
             {
-                GitService.InitGitRepository(rootDirectoryInfo);
+                _gitService.InitGitRepository(rootDirectoryInfo.FullName);
             }
         }
 
@@ -64,19 +86,19 @@
             directoryCreator.CreateDirectoryStructure();
         }
 
-        private FileInfo CreateSolutionFile(DirectoryInfo root, SolutionModel model)
+        private FileInfo CreateSolutionFile(DirectoryInfo root, Solution model)
         {
             var templateToRender = model.IncludeTestProject ? SolutionWithTestTemplate : SolutionTemplate;
             var solutionFile = new FileInfo(string.Format("{0}{1}.sln", root.FullName, model.SolutionName));
-            
-            File.WriteAllText(solutionFile.FullName, TemplateRenderer.Render(templateToRender, model));
+
+            File.WriteAllText(solutionFile.FullName, _templateRenderer.Render(templateToRender, model));
 
             return solutionFile;
         }
 
-        private FileInfo CreateProjectFile(DirectoryInfo root, SolutionModel model)
+        private FileInfo CreateProjectFile(DirectoryInfo root, Solution solution)
         {
-            string projectRoot = string.Format("{0}/{1}/", root.FullName, model.ProjectName);
+            string projectRoot = string.Format("{0}/{1}/", root.FullName, solution.ProjectName);
             var directoryInfo = new DirectoryInfo(projectRoot);
             var projectTemplate = ProjectTemplate;
 
@@ -85,49 +107,48 @@
                 directoryInfo.Create();
             }
 
-            var projectModel = new ProjectModel(model.TestProjectGuid)
+            var project = new Project(solution.TestProjectGuid)
             {
-                ProjectAssemblyName = model.ProjectAssemblyName,
-                ProjectName = model.ProjectName,
-                ProjectRootNameSpace = model.ProjectRootNameSpace,
-                TargetFramework = model.TargetFramework,
-                ReleaseOutputPath = string.Format("../../output/Release/{0}", model.ProjectName),
-                DebugOutputPath = string.Format("../../output/Debug/{0}", model.ProjectName),
-                ProjectType = model.ProjectType
+                ProjectAssemblyName = solution.ProjectAssemblyName,
+                ProjectName = solution.ProjectName,
+                ProjectRootNameSpace = solution.ProjectRootNameSpace,
+                TargetFramework = solution.TargetFramework,
+                ReleaseOutputPath = string.Format("../../output/Release/{0}", solution.ProjectName),
+                DebugOutputPath = string.Format("../../output/Debug/{0}", solution.ProjectName),
+                ProjectType = solution.ProjectType
             };
 
-            projectModel.ProjectOutputType = projectModel.ProjectTypeToProjectOutputType(model.ProjectType);
-            projectModel.AddCoreReferences();
-            
-            if (projectModel.ProjectOutputType == "Exe")
+            project.ProjectOutputType = _projectTypeConverterService.Convert(solution.ProjectType);
+            _referencesService.AddRequiredReferences(project);
+
+            if (string.Equals(project.ProjectOutputType, "Exe"))
             {
-                File.WriteAllText(projectRoot + "Program.cs", TemplateRenderer.Render(ConsoleProgramClass, projectModel));
+                File.WriteAllText(projectRoot + "Program.cs", _templateRenderer.Render(ConsoleProgramClass, project));
             }
-            else if (model.ProjectType == "WPF")
+            else if (string.Equals(solution.ProjectType, "WPF"))
             {
                 projectTemplate = WpfProjectTemplate;
-                File.WriteAllText(projectRoot + "App.xaml", TemplateRenderer.Render(AppXaml, projectModel));
-                File.WriteAllText(projectRoot + "App.xaml.cs", TemplateRenderer.Render(AppXamlCs, projectModel));
-                File.WriteAllText(projectRoot + "MainWindow.xaml", TemplateRenderer.Render(MainWindowXaml, projectModel));
-                File.WriteAllText(projectRoot + "MainWindow.xaml.cs", TemplateRenderer.Render(MainWindowXamlCs, projectModel));
+                File.WriteAllText(projectRoot + "App.xaml", _templateRenderer.Render(AppXaml, project));
+                File.WriteAllText(projectRoot + "App.xaml.cs", _templateRenderer.Render(AppXamlCs, project));
+                File.WriteAllText(projectRoot + "MainWindow.xaml", _templateRenderer.Render(MainWindowXaml, project));
+                File.WriteAllText(projectRoot + "MainWindow.xaml.cs", _templateRenderer.Render(MainWindowXamlCs, project));
             }
-            else if (model.ProjectType == "WinForms")
+            else if (string.Equals(solution.ProjectType, "WinForms"))
             {
-                File.WriteAllText(projectRoot + "Form1.cs", TemplateRenderer.Render(Form1Cs, projectModel));
-                File.WriteAllText(projectRoot + "Form1.Designer.cs", TemplateRenderer.Render(Form1DesignerCs, projectModel));
-                File.WriteAllText(projectRoot + "Program.cs", TemplateRenderer.Render(ProgramCs, projectModel));
+                File.WriteAllText(projectRoot + "Form1.cs", _templateRenderer.Render(Form1Cs, project));
+                File.WriteAllText(projectRoot + "Form1.Designer.cs", _templateRenderer.Render(Form1DesignerCs, project));
+                File.WriteAllText(projectRoot + "Program.cs", _templateRenderer.Render(ProgramCs, project));
             }
 
-            var projectFile = new FileInfo(projectRoot + projectModel.ProjectName + ".csproj");
-            
-            File.WriteAllText(projectFile.FullName, TemplateRenderer.Render(projectTemplate, projectModel));
-            
+            var projectFile = new FileInfo(projectRoot + project.ProjectName + ".csproj");
+            File.WriteAllText(projectFile.FullName, _templateRenderer.Render(ProjectTemplate, project));
+
             return projectFile;
         }
 
-        private FileInfo CreateTestProjectFile(DirectoryInfo root, SolutionModel model)
+        private FileInfo CreateTestProjectFile(DirectoryInfo root, Solution solution)
         {
-            string projectRoot = string.Format("{0}/{1}.Tests/", root.FullName, model.ProjectName);
+            string projectRoot = string.Format("{0}/{1}.Tests/", root.FullName, solution.ProjectName);
             var directoryInfo = new DirectoryInfo(projectRoot);
 
             if (!directoryInfo.Exists)
@@ -135,34 +156,34 @@
                 directoryInfo.Create();
             }
 
-            var projectName = string.Format("{0}.Tests", model.ProjectName);
-            var projectModel = new ProjectModel(model.TestProjectGuid)
+            var projectName = string.Format("{0}.Tests", solution.ProjectName);
+            var project = new Project(solution.TestProjectGuid)
             {
-                ProjectAssemblyName = string.Format("{0}.Tests", model.ProjectAssemblyName),
+                ProjectAssemblyName = string.Format("{0}.Tests", solution.ProjectAssemblyName),
                 ProjectName = projectName,
-                ProjectRootNameSpace = string.Format("{0}.Tests", model.ProjectRootNameSpace),
-                TargetFramework = model.TargetFramework,
+                ProjectRootNameSpace = string.Format("{0}.Tests", solution.ProjectRootNameSpace),
+                TargetFramework = solution.TargetFramework,
                 ReleaseOutputPath = string.Format("../../output/Release/{0}", projectName),
                 DebugOutputPath = string.Format("../../output/Debug/{0}", projectName),
-                ProjectOutputType = "Library",
+                ProjectOutputType = ProjectOutputTypes.Library
             };
 
-            if (model.TargetFramework == "v4.5")
+            if (string.Equals(solution.TargetFramework, "v4.5"))
             {
-                projectModel.ProjectType = "Test";
+                project.ProjectType = ProjectTypes.Test;
                 var packagesFile = new FileInfo(projectRoot + "packages.config");
-                File.WriteAllText(packagesFile.FullName, TemplateRenderer.Render(PackagesTemplate, projectModel));
+                File.WriteAllText(packagesFile.FullName, _templateRenderer.Render(PackagesTemplate, project));
             }
 
-            projectModel.AddCoreReferences();
+            _referencesService.AddRequiredReferences(project);
 
-            var projectFile = new FileInfo(projectRoot + projectModel.ProjectName + ".csproj");
-            File.WriteAllText(projectFile.FullName, TemplateRenderer.Render(ProjectTemplate, projectModel));
+            var projectFile = new FileInfo(projectRoot + project.ProjectName + ".csproj");
+            File.WriteAllText(projectFile.FullName, _templateRenderer.Render(ProjectTemplate, project));
 
             return projectFile;
         }
 
-        private FileInfo[] CreateSolutionAssets(DirectoryInfo root, SolutionModel model)
+        private FileInfo[] CreateSolutionAssets(DirectoryInfo root, Solution model)
         {
             var files = new List<FileInfo>();
 
@@ -171,45 +192,49 @@
             if (model.IncludeGitAttribute)
             {
                 solutionFile = new FileInfo(string.Format("{0}/.gitattributes", root.FullName));
-                File.WriteAllText(solutionFile.FullName, TemplateRenderer.Render(GitAttributeTemplate, model));
+                File.WriteAllText(solutionFile.FullName, _templateRenderer.Render(GitAttributeTemplate, model));
                 files.Add(solutionFile);
             }
+
             if (model.IncludeGitIgnore)
             {
                 solutionFile = new FileInfo(string.Format("{0}/.gitignore", root.FullName));
-                File.WriteAllText(solutionFile.FullName, TemplateRenderer.Render(GitIgnoreTemplate, model));
+                File.WriteAllText(solutionFile.FullName, _templateRenderer.Render(GitIgnoreTemplate, model));
                 files.Add(solutionFile);
             }
+
             if (model.IncludeReadme)
             {
                 solutionFile = new FileInfo(string.Format("{0}/README.md", root.FullName));
-                File.WriteAllText(solutionFile.FullName, TemplateRenderer.RenderAndRenderContent(ReadmeTemplate, model));
+                File.WriteAllText(solutionFile.FullName, _templateRenderer.RenderAndRenderContent(ReadmeTemplate, model));
                 files.Add(solutionFile);
             }
+
             if (model.IncludeLicense)
             {
                 solutionFile = new FileInfo(string.Format("{0}/License.txt", root.FullName));
                 File.WriteAllText(solutionFile.FullName, model.LicenseText);
                 files.Add(solutionFile);
             }
+
             return files.ToArray();
         }
 
-        private FileInfo[] CreateProjectAssets(DirectoryInfo root, SolutionModel model)
+        private FileInfo[] CreateProjectAssets(DirectoryInfo root, Solution model)
         {
             var files = new List<FileInfo>();
 
             FileInfo solutionFile;
-            if (model.IncludeResharper)
+            if (model.IncludeReSharper)
             {
                 solutionFile = new FileInfo(string.Format("{0}/resharper.settings", root.FullName));
-                File.WriteAllText(solutionFile.FullName, TemplateRenderer.Render(ResharperSettingsTemplate, model));
+                File.WriteAllText(solutionFile.FullName, _templateRenderer.Render(ResharperSettingsTemplate, model));
                 files.Add(solutionFile);
             }
             if (model.IncludeStylecop)
             {
                 solutionFile = new FileInfo(string.Format("{0}/Settings.StyleCop", root.FullName));
-                File.WriteAllText(solutionFile.FullName, TemplateRenderer.Render(StyleCopTemplate, model));
+                File.WriteAllText(solutionFile.FullName, _templateRenderer.Render(StyleCopTemplate, model));
                 files.Add(solutionFile);
             }
             return files.ToArray();

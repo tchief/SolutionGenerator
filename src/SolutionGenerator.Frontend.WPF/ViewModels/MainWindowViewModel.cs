@@ -39,7 +39,7 @@ namespace SolutionGenerator.Frontend.WPF.ViewModels
 
             Generate = new Command(OnGenerateExecute, OnGenerateCanExecute);
 
-            Solution = new SolutionModel();
+            Solution = new Solution();
         }
         #endregion
 
@@ -54,7 +54,7 @@ namespace SolutionGenerator.Frontend.WPF.ViewModels
         }
 
         [Model]
-        public SolutionModel Solution { get; private set; }
+        public Solution Solution { get; private set; }
 
         public bool StartVisualStudio { get; set; }
         #endregion

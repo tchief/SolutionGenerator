@@ -13,7 +13,7 @@ namespace SolutionGenerator.Frontend.WPF.ViewModels
 
     public class IncludeOptionsViewModel : ViewModelBase
     {
-        public IncludeOptionsViewModel(SolutionModel solution)
+        public IncludeOptionsViewModel(Solution solution)
         {
             Argument.IsNotNull(() => solution);
 
@@ -27,6 +27,6 @@ namespace SolutionGenerator.Frontend.WPF.ViewModels
         [Catel.Fody.Expose("IncludeReSharper")]
         [Catel.Fody.Expose("IncludeStylecop")]
         [Catel.Fody.Expose("IncludeTestProject")]
-        public SolutionModel Solution { get; private set; }
+        public Solution Solution { get; private set; }
     }
 }

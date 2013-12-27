@@ -12,7 +12,7 @@ namespace SolutionGenerator.Services
     public interface ISolutionGeneratorService
     {
         #region Methods
-        void DoWork(SolutionModel model);
+        void DoWork(Solution model);
         #endregion
     }
 }

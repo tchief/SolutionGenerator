@@ -17,5 +17,7 @@ public static class ModuleInitializer
         serviceLocator.RegisterType<IGitService, GitService>();
         serviceLocator.RegisterType<ISolutionGeneratorService, SolutionGeneratorService>();
         serviceLocator.RegisterType<ITemplateRenderer, TemplateRenderer>();
+        serviceLocator.RegisterType<IReferencesService, ReferencesService>();
+        serviceLocator.RegisterType<IProjectTypeConverterService, ProjectTypeConverterService>();
     }
 }

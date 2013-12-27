@@ -257,7 +257,7 @@ namespace SolutionGenerator.Frontend
             // 
             // solutionModelBindingSource
             // 
-            this.solutionModelBindingSource.DataSource = typeof(SolutionGenerator.Models.SolutionModel);
+            this.solutionModelBindingSource.DataSource = typeof(SolutionGenerator.Models.Solution);
             // 
             // projectNameTextBox
             // 

@@ -39,11 +39,12 @@
       <HintPath>..\packages\Catel.Core.3.8.1312160837-beta\lib\net45\Catel.Core.dll</HintPath>
     </Reference>
     <Reference Include="Catel.Fody.Attributes">
-      <HintPath>..\packages\Catel.Fody.1.5.3.1312141241-beta\lib\net45\Catel.Fody.Attributes.dll</HintPath>
+      <HintPath>..\packages\Catel.Fody.1.6.0\lib\net45\Catel.Fody.Attributes.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="LibGit2Sharp">
-      <HintPath>..\packages\LibGit2Sharp.0.14.1.0\lib\net35\LibGit2Sharp.dll</HintPath>
+    <Reference Include="LibGit2Sharp, Version=0.15.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\LibGit2Sharp.0.15.0.0\lib\net35\LibGit2Sharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -54,16 +55,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\ProjectReference.cs" />
     <Compile Include="ModuleInitializer.cs" />
+    <Compile Include="ProjectOutputTypes.cs" />
+    <Compile Include="ProjectTypes.cs" />
     <Compile Include="Services\DirectoryCreator.cs" />
     <Compile Include="Services\GitService.cs" />
-    <Compile Include="Models\ProjectModel.cs" />
+    <Compile Include="Models\Project.cs" />
     <Compile Include="Services\Interfaces\IGitService.cs" />
     <Compile Include="Services\Interfaces\IDirectoryCreator.cs" />
     <Compile Include="Services\Interfaces\ISolutionGeneratorService.cs" />
     <Compile Include="Services\Interfaces\ITemplateRenderer.cs" />
+    <Compile Include="Services\Interfaces\IReferencesService.cs" />
+    <Compile Include="Services\Interfaces\IProjectTypeConverterService.cs" />
+    <Compile Include="Services\ProjectTypeConverterService.cs" />
+    <Compile Include="Services\ReferencesService.cs" />
     <Compile Include="Services\SolutionGeneratorService.cs" />
-    <Compile Include="Models\SolutionModel.cs" />
+    <Compile Include="Models\Solution.cs" />
     <Compile Include="Services\TemplateRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -180,14 +188,9 @@
     <PostBuildEvent>
 if not exist "$(TargetDir)NativeBinaries" md "$(TargetDir)NativeBinaries"
 if not exist "$(TargetDir)NativeBinaries\x86" md "$(TargetDir)NativeBinaries\x86"
-xcopy /s /y "$(SolutionDir)packages\LibGit2Sharp.0.14.1.0\lib\net35\NativeBinaries\x86\*.*" "$(TargetDir)NativeBinaries\x86"
+xcopy /s /y "$(SolutionDir)packages\LibGit2Sharp.0.15.0.0\lib\net35\NativeBinaries\x86\*.*" "$(TargetDir)NativeBinaries\x86"
 if not exist "$(TargetDir)NativeBinaries\amd64" md "$(TargetDir)NativeBinaries\amd64"
-xcopy /s /y "$(SolutionDir)packages\LibGit2Sharp.0.14.1.0\lib\net35\NativeBinaries\amd64\*.*" "$(TargetDir)NativeBinaries\amd64"
-if not exist "$(TargetDir)NativeBinaries" md "$(TargetDir)NativeBinaries"
-if not exist "$(TargetDir)NativeBinaries\x86" md "$(TargetDir)NativeBinaries\x86"
-xcopy /s /y "$(SolutionDir)packages\LibGit2Sharp.0.14.1.0\lib\net35\NativeBinaries\x86\*.*" "$(TargetDir)NativeBinaries\x86"
-if not exist "$(TargetDir)NativeBinaries\amd64" md "$(TargetDir)NativeBinaries\amd64"
-xcopy /s /y "$(SolutionDir)packages\LibGit2Sharp.0.14.1.0\lib\net35\NativeBinaries\amd64\*.*" "$(TargetDir)NativeBinaries\amd64"</PostBuildEvent>
+xcopy /s /y "$(SolutionDir)packages\LibGit2Sharp.0.15.0.0\lib\net35\NativeBinaries\amd64\*.*" "$(TargetDir)NativeBinaries\amd64"</PostBuildEvent>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Import Project="Fody.targets" />

@@ -11,13 +11,13 @@
 
     public partial class GeneratorForm : Form
     {
-        private readonly SolutionModel _solutionModel;
+        private readonly Solution _solutionModel;
 
         public GeneratorForm()
         {
             InitializeComponent();
 
-            _solutionModel = new SolutionModel();
+            _solutionModel = new Solution();
 
             _solutionModel.PropertyChanged += (sender, args) =>
                 {
