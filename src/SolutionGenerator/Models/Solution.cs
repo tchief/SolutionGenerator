@@ -3,8 +3,10 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
     using System.IO;
     using System.Linq;
+    using System.Runtime.CompilerServices;
     using Catel.Data;
 
     public class Solution : ModelBase
@@ -58,14 +60,19 @@
 
         public string ProjectGuid { get; set; }
 
+        [Required]
         public string ProjectName { get; set; }
 
+        [Required]
         public string SolutionName { get; set; }
 
+        [Required]
         public string RootPath { get; set; }
 
+        [Required]
         public string ProjectRootNameSpace { get; set; }
 
+        [Required]
         public string ProjectAssemblyName { get; set; }
 
         [DefaultValue("v4.5")]

@@ -12,13 +12,17 @@ namespace SolutionGenerator.Frontend.WPF.ViewModels
     using Catel;
     using Catel.Logging;
     using Catel.MVVM;
+    using Catel.MVVM.Services;
     using SolutionGenerator.Models;
 
     public class SolutionOptionsViewModel : ViewModelBase
     {
+        private readonly ISelectDirectoryService _selectDirectoryService;
+
         #region Constructors
-        public SolutionOptionsViewModel(Solution solution)
+        public SolutionOptionsViewModel(Solution solution, ISelectDirectoryService selectDirectoryService)
         {
+            _selectDirectoryService = selectDirectoryService;
             Argument.IsNotNull(() => solution);
 
             Solution = solution;
@@ -28,12 +32,13 @@ namespace SolutionGenerator.Frontend.WPF.ViewModels
 
             // TODO: Read from registry instead in service
             AvailableTargetFrameworks = new ObservableCollection<string>(new[] { "v2.0", "v3.0", "v3.5", "v4.0", "v4.5" });
+
+            SelectSolutionDirectory = new Command(OnSelectSolutionDirectoryExecute);
         }
         #endregion
 
         #region Properties
         [Model]
-        [Catel.Fody.Expose("RootPath")]
         [Catel.Fody.Expose("SolutionName")]
         [Catel.Fody.Expose("ProjectName")]
         [Catel.Fody.Expose("ProjectType")]
@@ -44,11 +49,32 @@ namespace SolutionGenerator.Frontend.WPF.ViewModels
         [Catel.Fody.Expose("Readme", "SolutionReadme")]
         public Solution Solution { get; private set; }
 
+        [ViewModelToModel("Solution")]
+        public string RootPath { get; set; }
+
         public ObservableCollection<ProjectTypes> AvailableProjectTypes { get; private set; }
 
         public ObservableCollection<string> AvailableTargetFrameworks { get; private set; }
 
         public List<string> AvailableLicenseNames { get; private set; }
+        #endregion
+
+        #region Commands
+        /// <summary>
+        /// Gets the SelectSolutionDirectory command.
+        /// </summary>
+        public Command SelectSolutionDirectory { get; private set; }
+
+        /// <summary>
+        /// Method to invoke when the SelectSolutionDirectory command is executed.
+        /// </summary>
+        private void OnSelectSolutionDirectoryExecute()
+        {
+            if (_selectDirectoryService.DetermineDirectory())
+            {
+                RootPath = _selectDirectoryService.DirectoryName;
+            }
+        }
         #endregion
     }
 }

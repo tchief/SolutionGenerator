@@ -1,4 +1,11 @@
-﻿namespace SolutionGenerator.Frontend.WPF
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="App.xaml.cs" company="Orcomp development team">
+//   Copyright (c) 2012 - 2013 Orcomp development team. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------------------------------------------------
+
+
+namespace SolutionGenerator.Frontend.WPF
 {
     using System;
     using System.Windows;
@@ -12,6 +19,7 @@
     /// </summary>
     public partial class App : Application
     {
+        #region Methods
         /// <summary>
         /// Raises the <see cref="E:System.Windows.Application.Startup"/> event.
         /// </summary>
@@ -33,5 +41,6 @@
 
             base.OnStartup(e);
         }
+        #endregion
     }
 }

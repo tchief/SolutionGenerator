@@ -24,7 +24,7 @@
 
         <Label Content="Root path" />
         <TextBox Text="{Binding RootPath, NotifyOnValidationError=True, ValidatesOnDataErrors=True}" />
-        <Button Content="..." Command="{Binding BrowseForRootPath}" />
+        <Button Content="..." Command="{Binding SelectSolutionDirectory}" />
 
         <Label Content="Solution name" />
         <TextBox Text="{Binding SolutionName, NotifyOnValidationError=True, ValidatesOnDataErrors=True}" catel:StackGrid.ColumnSpan="2" />
