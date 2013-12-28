@@ -87,6 +87,8 @@ namespace SolutionGenerator.Frontend.WPF.ViewModels
             if (_selectDirectoryService.DetermineDirectory())
             {
                 RootPath = _selectDirectoryService.DirectoryName;
+
+                Log.Info("Changed solution directory to '{0}'", RootPath);
             }
         }
         #endregion
@@ -107,22 +109,22 @@ namespace SolutionGenerator.Frontend.WPF.ViewModels
                 {
                     SolutionName = solutionName;
                 }
-
-                if (string.IsNullOrWhiteSpace(ProjectName))
-                {
-                    ProjectName = solutionName;
-                }
-
-                if (string.IsNullOrWhiteSpace(ProjectRootNameSpace))
-                {
-                    ProjectRootNameSpace = solutionName;
-                }
-
-                if (string.IsNullOrWhiteSpace(ProjectAssemblyName))
-                {
-                    ProjectAssemblyName = solutionName;
-                }
             }
+        }
+
+        private void OnSolutionNameChanged()
+        {
+            var solutionName = SolutionName;
+
+            ProjectName = solutionName;
+        }
+
+        private void OnProjectNameChanged()
+        {
+            var projectName = ProjectName;
+
+            ProjectRootNameSpace = projectName;
+            ProjectAssemblyName = projectName;   
         }
     }
 }
