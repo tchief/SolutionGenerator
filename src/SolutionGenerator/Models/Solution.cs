@@ -29,8 +29,6 @@ namespace SolutionGenerator.Models
         #endregion
 
         #region Properties
-        public bool OpenFolderOnCreate { get; set; }
-
         [DefaultValue(true)]
         public bool InitializeGit { get; set; }
 

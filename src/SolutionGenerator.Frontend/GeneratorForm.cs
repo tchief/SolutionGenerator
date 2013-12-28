@@ -71,7 +71,8 @@
                 var fileName = string.Format("{0}/src/{1}.sln", _solutionModel.RootPath, _solutionModel.SolutionName);
                 Process.Start(fileName);
             }
-            if (_solutionModel.OpenFolderOnCreate)
+
+            if (openFolderOnCreateCheckBox.Checked)
             {
                 Process.Start(_solutionModel.RootPath);
             }

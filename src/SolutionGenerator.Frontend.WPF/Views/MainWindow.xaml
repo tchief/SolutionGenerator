@@ -27,8 +27,8 @@
         <views:IncludeOptionsView DataContext="{Binding Solution}" />
 
         <WrapPanel Orientation="Horizontal">
-            <CheckBox Content="Open folder after creating solution" />
-            <CheckBox Content="Start Visual Studio after creating solution" />
+            <CheckBox Content="Open folder after creating solution" IsChecked="{Binding OpenFolderOnCreate}" />
+            <CheckBox Content="Start Visual Studio after creating solution" IsChecked="{Binding StartVisualStudio}"  />
         </WrapPanel>
         <catel:EmptyCell />
 

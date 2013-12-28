@@ -57,6 +57,8 @@ namespace SolutionGenerator.Frontend.WPF.ViewModels
         public Solution Solution { get; private set; }
 
         public bool StartVisualStudio { get; set; }
+
+        public bool OpenFolderOnCreate { get; set; }
         #endregion
 
         #region Commands
@@ -85,7 +87,7 @@ namespace SolutionGenerator.Frontend.WPF.ViewModels
                 _processService.StartProcess(fileName);
             }
 
-            if (Solution.OpenFolderOnCreate)
+            if (OpenFolderOnCreate)
             {
                 Log.Info("Opening folder '{0}'", Solution.RootPath);
 

@@ -471,7 +471,6 @@ namespace SolutionGenerator.Frontend
             // 
             // openFolderOnCreateCheckBox
             // 
-            this.openFolderOnCreateCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("CheckState", this.solutionModelBindingSource, "OpenFolderOnCreate", true));
             this.openFolderOnCreateCheckBox.Location = new System.Drawing.Point(152, 420);
             this.openFolderOnCreateCheckBox.Name = "openFolderOnCreateCheckBox";
             this.openFolderOnCreateCheckBox.Size = new System.Drawing.Size(185, 24);
