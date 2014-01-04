@@ -75,7 +75,9 @@ Target "DeleteOutputDirectories" (fun _ ->
 
 Target "RestorePackagesManually" (fun _ ->
       !! "./**/packages.config"
-      |> Seq.iter (RestorePackage (fun p -> { p with ToolPath = nugetExePath }))
+      |> Seq.iter (RestorePackage (fun p -> { p with
+                                                 ToolPath = nugetExePath
+                                                 OutputPath = nugetRepositoryDir}))
 )
 
 Target "UpdateAssemblyVersion" (fun _ ->
