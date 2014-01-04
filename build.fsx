@@ -171,7 +171,7 @@ Target "Clean" DoNothing
 "CleanPackagesDirectory" ==> "DeleteOutputFiles" ==> "DeleteOutputDirectories" ==> "Clean"
 
 Target "Build" DoNothing
-"UpdateAssemblyVersion" ==> "BuildOtherProjects" ==> "Build"
+"UpdateAssemblyVersion" ==> "RestorePackagesManually" ==> "BuildOtherProjects" ==> "Build"
 
 Target "Tests" DoNothing
 //"BuildTests" ==> "RunTests" ==> "Tests"
