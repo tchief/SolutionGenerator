@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package>
+  <metadata>
+    <id>SolutionGenerator.Frontend.Wpf</id>
+    <version>@build.number@</version>
+	<title>SolutionGenerator.Frontend.Wpf</title>
+    <authors>pietervp,OrchestraDevs,GeertvanHorrik</authors>
+    <owners>pietervp,OrchestraDevs,GeertvanHorrik</owners>
+
+	<description>
+	  Simple WPF application that will create the project structure, solution and project files as well as other artifacts to start working on a new project at the click of a button.
+	</description>
+	<summary>
+	</summary>
+	
+	<tags>generator</tags>
+	<language>en-US</language>
+	<projectUrl>https://github.com/Orcomp/SolutionGenerator</projectUrl>
+	@dependencies@
+  </metadata>
+</package>

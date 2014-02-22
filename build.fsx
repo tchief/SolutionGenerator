@@ -12,6 +12,7 @@ open Fake.MSTest
 // Definitions
 
 let binProjectName = "SolutionGenerator"
+let chocoBinProjectName = "SolutionGenerator.Frontend.Wpf"
 let netVersions = ["NET45"]
 
 let srcDir  = @".\src\"
@@ -23,12 +24,18 @@ let nuspecTemplatesDir = deploymentDir @@ "templates"
 
 let nugetExePath = @".\src\.nuget\nuget.exe"
 let nugetRepositoryDir = srcDir @@ @"packages"
-let nugetAccessKey = if File.Exists(@".\Nuget.key") then File.ReadAllText(@".\Nuget.key") else ""
-let version = File.ReadAllText(@".\version.txt")
+let getBuildParamOrFromFileOrEmpty param file = getBuildParamOrDefault param (if File.Exists(file) then File.ReadAllText(file) else "")
+let nugetAccessPublishKey = getBuildParamOrFromFileOrEmpty "nugetkey" @".\Nuget.key"
+let chocoAccessPublishKey = getBuildParamOrFromFileOrEmpty "chocokey" @".\Choco.key"
 
+let version = File.ReadAllText(@".\version.txt")
 let solutionAssemblyInfoPath = srcDir @@ "SolutionAssemblyInfo.cs"
-let projectsToPackageAssemblyNames = []
-let projectsToPackageDependencies:^string list = []
+
+let projectsToPackageAssemblyNames = ["SolutionGenerator"]
+let projectsToPackageDependencies:^string list = ["Catel.Core"; "Catel.Fody"; "Fody"; "LibGit2Sharp"; "ModuleInit.Fody"]
+let chocoExtensionsToPackage = [".dll"; ".exe"; ".txt"; ".xml"; ".config"; ".gui"; ".csx"]
+let chocoProjectsToPackageAssemblyNames = ["SolutionGenerator.Frontend.Wpf";]
+let chocoProjectsToPackageDependencies =  []
 
 let outputDir = @".\output\"
 let outputReleaseDir = outputDir @@ "release" ////@@ netVersion
@@ -124,7 +131,6 @@ FinalTarget "CloseMSTestRunner" (fun _ ->
 // Build a NuGet package
 
 Target "NuGet" (fun _ ->
-    let nugetAccessPublishKey = getBuildParamOrDefault "nugetkey" nugetAccessKey
     let getOutputFile netVersion projectName ext = sprintf @"%s\%s.%s" (getProjectOutputBinDirs netVersion projectName) projectName ext
     let getBinProjectFiles netVersion projectName =  [(getOutputFile netVersion projectName "dll")
                                                       (getOutputFile netVersion projectName "xml")]
@@ -167,6 +173,50 @@ Target "NuGet" (fun _ ->
 )
 
 // --------------------------------------------------------------------------------------
+// Build a Chocolatey package
+
+Target "Chocolatey" (fun _ ->
+    let outputChocoBinDir = getProjectOutputBinDirs (netVersions.First()) chocoBinProjectName
+
+    let outputChocoBinExe = sprintf @"%s\%s.exe" outputChocoBinDir chocoBinProjectName
+    File.Copy(outputChocoBinExe, (outputChocoBinExe + ".gui"))
+
+    let nugetDependencies = chocoProjectsToPackageDependencies
+                              |> List.map (fun d -> d, GetPackageVersion nugetRepositoryDir d)
+    
+    let getNuspecFile = sprintf "%s\%s.nuspec" nuspecTemplatesDir chocoBinProjectName
+
+    let preparePackage dirToPackage = 
+        let chocoDeploymentToolsDir = packagesDir @@ "work" @@ "tools"
+        let filesFilter path = chocoExtensionsToPackage.Contains(Path.GetExtension(path))
+        CopyDir chocoDeploymentToolsDir dirToPackage filesFilter
+
+    let cleanPackage name = 
+        DeleteDir (packagesDir @@ "work")
+
+    let doPackage dependencies =   
+        NuGet (fun p -> 
+            {p with
+                Project = binProjectName
+                Version = version
+                ToolPath = nugetExePath
+                OutputPath = packagesDir
+                WorkingDir = packagesDir @@ "work"
+                Dependencies = dependencies
+                Publish = not (String.IsNullOrEmpty chocoAccessPublishKey)
+                PublishUrl = "http://chocolatey.org/"
+                AccessKey = chocoAccessPublishKey })
+                getNuspecFile
+    
+    let doAll files depenencies =
+        preparePackage files
+        doPackage depenencies
+        cleanPackage ""
+
+    doAll outputChocoBinDir nugetDependencies
+)
+
+// --------------------------------------------------------------------------------------
 // Combined targets
 
 Target "Clean" DoNothing
@@ -185,6 +235,7 @@ Target "All" DoNothing
 
 Target "Release" DoNothing
 "All" ==> "Release"
-//"NuGet" ==> "Release"
+"NuGet" ==> "Release"
+"Chocolatey" ==> "Release"
  
 RunTargetOrDefault "All"

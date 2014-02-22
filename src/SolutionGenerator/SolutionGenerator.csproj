@@ -38,10 +38,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Catel.Core">
-      <HintPath>..\packages\Catel.Core.3.8.1312160837-beta\lib\net45\Catel.Core.dll</HintPath>
+      <HintPath>..\packages\Catel.Core.3.9.0\lib\net45\Catel.Core.dll</HintPath>
     </Reference>
     <Reference Include="Catel.Fody.Attributes">
-      <HintPath>..\packages\Catel.Fody.1.6.0.1312271635-beta\lib\net45\Catel.Fody.Attributes.dll</HintPath>
+      <HintPath>..\packages\Catel.Fody.1.7.0\lib\net45\Catel.Fody.Attributes.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="LibGit2Sharp, Version=0.15.0.0, Culture=neutral, processorArchitecture=MSIL">

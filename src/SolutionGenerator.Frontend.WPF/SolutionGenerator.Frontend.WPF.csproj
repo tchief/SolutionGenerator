@@ -39,17 +39,17 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Catel.Core">
-      <HintPath>..\packages\Catel.Core.3.8.1312160837-beta\lib\net45\Catel.Core.dll</HintPath>
+      <HintPath>..\packages\Catel.Core.3.9.0\lib\net45\Catel.Core.dll</HintPath>
     </Reference>
     <Reference Include="Catel.Extensions.Controls">
-      <HintPath>..\packages\Catel.Extensions.Controls.3.8.1312160837-beta\lib\net45\Catel.Extensions.Controls.dll</HintPath>
+      <HintPath>..\packages\Catel.Extensions.Controls.3.9.0\lib\net45\Catel.Extensions.Controls.dll</HintPath>
     </Reference>
     <Reference Include="Catel.Fody.Attributes">
-      <HintPath>..\packages\Catel.Fody.1.6.0.1312271635-beta\lib\net45\Catel.Fody.Attributes.dll</HintPath>
+      <HintPath>..\packages\Catel.Fody.1.7.0\lib\net45\Catel.Fody.Attributes.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Catel.MVVM">
-      <HintPath>..\packages\Catel.MVVM.3.8.1312160837-beta\lib\net45\Catel.MVVM.dll</HintPath>
+      <HintPath>..\packages\Catel.MVVM.3.9.0\lib\net45\Catel.MVVM.dll</HintPath>
     </Reference>
     <Reference Include="LibGit2Sharp, Version=0.15.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -58,7 +58,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Catel.MVVM.3.8.1312160837-beta\lib\net45\System.Windows.Interactivity.dll</HintPath>
+      <HintPath>..\packages\Catel.MVVM.3.9.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
